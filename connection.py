@@ -15,7 +15,15 @@ def get_suggestions():
   return jsonify(result=input_concept.top5chatrooms)
 
 
-@app.route('_add_to_chatroom_')
+@app.route('/_add_to_chatroom_')
 def add_to_chatroom():
   chatroom_name = request.args.get('chatroom_uid')
   
+@app.route('/')
+def index():
+  return render_template('index.html')
+  
+@app.route('/chatroom/<uid>')
+def chatroom(uid):
+  return render_template('chatrom.html', uid=uid)
+
