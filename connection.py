@@ -14,10 +14,19 @@ def get_suggestions():
   input_concept.importFromJSON(getStringInfo(input_text))
   return jsonify(result=input_concept.top5chatrooms)
 
+@app.route('/_pull_data_')
+def pull_data():
+  uid = request.args.get('uid', '', type=string)
+  return jsonify (result=CHATROOMS[uid].get_text())
+
 
 @app.route('/_add_to_chatroom_')
 def add_to_chatroom():
   chatroom_name = request.args.get('chatroom_uid')
+  return jsonify(result="hello world")
+
+
+  
   
 @app.route('/')
 def index():

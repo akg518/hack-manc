@@ -7,37 +7,48 @@ class Concept:
 
 
   def __init__(self):
-    self.input_string = "good day bad weather bank list well done"
     self.keywords = {}
     self.topics = {} #TOPICS = TAXONOMY!!!!
     self.sentiment = ["none", 0]
 
 
-  def importFromJSON(self):
+  def importFromJSON(self, input_string):
     """
     fills out all the concept attributes#
     and topics as expected.
     """
-    keywordJSON = getKeywords(self.input_string)
+    
+    positivity_score = 0
+    keyword_num = 0
+    
+    keywordJSON = getKeywords(input_string)
+    
+    
     for keyword in keywordJSON['keywords']:
-     self.keywords[keyword['text']] = keyword['relevance']
+      self.keywords[keyword['text']] = keyword['relevance']
+      sentiment = keyword['sentiment']['type'].encode('utf-8')
+      if sentiment == 'positive':
+        positivity_score += relevance
+      else:
+        positivity_score -= relevance
+        
+    pos
 
-    taxonomyJSON = getTaxonomy(self.input_string)
+    taxonomyJSON = getTaxonomy(input_string)
     for category in taxonomyJSON['taxonomy']:
       self.topics[category['label']] = category['score']
 
 
 
     for x in self.keywords:
-      print(x)
-      print self.keywords[x]
+      print str(x) + ":" + str(self.keywords[x])
 
     for x in self.topics:
-      print(x)
-      print self.topics[x]
+      str(x) + ":" + str(self.topics[x])
 
-
-    print "ok"
+      
+    for 
+  
 
     #TODO finish me
     pass
@@ -67,8 +78,10 @@ class Concept:
     scorings = {}
     for chatroom in chatroomList:
       scorings[chatroom.id] = self.compare(chatroom.concept)
-    #przesortowac
-    #top 10 do top10
+    
+    dic2 = sorted(scorings.items(), key=lambda x: x[1])
+    top5 = dic2[-5:]
+    return top5
 
 
 

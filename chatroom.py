@@ -36,6 +36,5 @@ class Chatroom():
                 global CHATROOMS
                 CHATROOMS.append(new_chatroom)
                 break
-            else:
-                continue
+
 

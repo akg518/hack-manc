@@ -21,8 +21,10 @@ def getKeywords(string):
 
     if response['status'] == 'OK':
         for keyword in response['keywords']:
-            print('sentiment: ', keyword['sentiment']['type'].encode('utf-8'))
-
+            print 'keyword: ' + str(keyword)
+            print 'sentiment: ' + str(keyword['sentiment']['type'].encode('utf-8'))
+            print 'relevance' + str(keyword['relevance'])
+            
     else:
         print('Error in keyword extaction call: ', response['statusInfo'])
 
@@ -39,3 +41,11 @@ def getTaxonomy(string):
         print('Error in taxonomy call: ', response['statusInfo'])
 
     return response
+  
+def getSentiment(string):
+  pass
+
+getKeywords("it is a really rainy weather today")
+  
+  
+  
