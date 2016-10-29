@@ -1,4 +1,6 @@
-from NLP import getStringInfo
+import json
+
+from NLP import getTaxonomy, getKeywords
 
 
 class concept:
@@ -8,7 +10,7 @@ class concept:
     self.keywords = {}
     self.topics = {} #TOPICS = TAXONOMY!!!!
     self.sentiment = {self.sentiment: "none", score : 0}
-  def igimportFromJSON(JSON):
+  def importFromJSON(JSON):
     """
     takes a JSON file as a string and fills out all the concept attributes#
     and topics as expected.
@@ -45,4 +47,5 @@ class concept:
     #top 10 do top10
 
 
-print getStringInfo("today's weather kinda sucks")
+  getTaxonomy("good day bad weather bank list well done")
+  getKeywords("good day bad weather bank list well done")
