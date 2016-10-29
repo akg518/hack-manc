@@ -1,8 +1,15 @@
+from NLP import getStringInfo
+
+
 class concept:
-  def __init__(self):
+
+
+
+
+  def __init__(self, score=None):
     self.keywords = {}
     self.topics = {} #TOPICS = TAXONOMY!!!!
-    self.sentiment = {sentiment : "none", score : 0}
+    self.sentiment = {self.sentiment: "none", score : 0}
   def importFromJSON(JSON):
     """
     takes a JSON file as a string and fills out all the concept attributes#
@@ -21,4 +28,6 @@ class concept:
     takes the chatrooms list and returns top 10 most relevant chatrooms
     """
     pass
-    
+
+
+getStringInfo("today's weather kinda sucks")
