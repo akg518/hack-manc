@@ -4,8 +4,6 @@ from NLP import getStringInfo
 class concept:
 
 
-
-
   def __init__(self, score=None):
     self.keywords = {}
     self.topics = {} #TOPICS = TAXONOMY!!!!
@@ -30,4 +28,4 @@ class concept:
     pass
 
 
-getStringInfo("today's weather kinda sucks")
+print getStringInfo("today's weather kinda sucks")

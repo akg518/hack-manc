@@ -9,7 +9,8 @@ returns keywords and taxonomy
 
 
 from alchemyapi import AlchemyAPI
-import json, getopt, sys
+import json
+
 alchemyapi = AlchemyAPI()
 
 
@@ -18,7 +19,7 @@ def getStringInfo(string):
 
 
 
-    inputText = string #!! TEMPORARY sys.argv[1]
+    inputText = string
 
 
     print('#   input:                                 #')
@@ -77,4 +78,7 @@ def getStringInfo(string):
 
     print('')
     print('')
+
+
+
     return "abc"
