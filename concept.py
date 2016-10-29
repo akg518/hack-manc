@@ -1,7 +1,7 @@
 class concept:
   def __init__(self):
     self.keywords = {}
-    self.topics = {}
+    self.topics = {} #TOPICS = TAXONOMY!!!!
     self.sentiment = {sentiment : "none", score : 0}
   def importFromJSON(JSON):
     """
