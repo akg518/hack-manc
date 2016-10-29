@@ -16,7 +16,7 @@ class concept:
     #TODO finish me
     pass
   def compare (self, other):
-        """
+    """
     compares two concepts and returns a relevance score between 0 and 1
     """
     similarity_ranking = 0

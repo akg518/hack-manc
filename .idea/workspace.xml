@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3d4b2fd6-7e23-491f-86bd-79e0de52eb54" name="Default" comment="" />
+    <list default="true" id="3d4b2fd6-7e23-491f-86bd-79e0de52eb54" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/concept.py" afterPath="$PROJECT_DIR$/concept.py" />
+    </list>
     <ignored path="hack-manc.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -34,8 +36,8 @@
       <file leaf-file-name="concept.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/concept.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3382353">
-              <caret line="29" column="7" selection-start-line="29" selection-start-column="7" selection-end-line="29" selection-end-column="7" />
+            <state vertical-scroll-proportion="0.49632353">
+              <caret line="18" column="4" selection-start-line="18" selection-start-column="4" selection-end-line="18" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -436,8 +438,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/concept.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3382353">
-          <caret line="29" column="7" selection-start-line="29" selection-start-column="7" selection-end-line="29" selection-end-column="7" />
+        <state vertical-scroll-proportion="0.49632353">
+          <caret line="18" column="4" selection-start-line="18" selection-start-column="4" selection-end-line="18" selection-end-column="4" />
           <folding />
         </state>
       </provider>
