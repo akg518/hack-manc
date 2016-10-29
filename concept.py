@@ -3,18 +3,42 @@ import json
 from NLP import getTaxonomy, getKeywords
 
 
-class concept:
+class Concept:
 
 
-  def __init__(self, score=None):
+  def __init__(self):
+    self.input_string = "good day bad weather bank list well done"
     self.keywords = {}
     self.topics = {} #TOPICS = TAXONOMY!!!!
-    self.sentiment = {self.sentiment: "none", score : 0}
-  def importFromJSON(JSON):
+    self.sentiment = ["none", 0]
+
+
+  def importFromJSON(self):
     """
-    takes a JSON file as a string and fills out all the concept attributes#
+    fills out all the concept attributes#
     and topics as expected.
     """
+    keywordJSON = getKeywords(self.input_string)
+    for keyword in keywordJSON['keywords']:
+     self.keywords[keyword['text']] = keyword['relevance']
+
+    taxonomyJSON = getTaxonomy(self.input_string)
+    for category in taxonomyJSON['taxonomy']:
+      self.topics[category['label']] = category['score']
+
+
+
+    for x in self.keywords:
+      print(x)
+      print self.keywords[x]
+
+    for x in self.topics:
+      print(x)
+      print self.topics[x]
+
+
+    print "ok"
+
     #TODO finish me
     pass
   def compare (self, other):
@@ -35,11 +59,11 @@ class concept:
       
     return similarity_ranking
 
-  def top10chatrooms(self, chatroomList):
+  def top5chatrooms(self, chatroomList):
     """
     takes the chatrooms list and returns top 10 most relevant chatrooms
     """
-    top10 = []
+    top5 = []
     scorings = {}
     for chatroom in chatroomList:
       scorings[chatroom.id] = self.compare(chatroom.concept)
@@ -47,5 +71,6 @@ class concept:
     #top 10 do top10
 
 
-  getTaxonomy("good day bad weather bank list well done")
-  getKeywords("good day bad weather bank list well done")
+
+c = Concept()
+c.importFromJSON()
