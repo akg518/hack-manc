@@ -8,7 +8,7 @@ class concept:
     self.keywords = {}
     self.topics = {} #TOPICS = TAXONOMY!!!!
     self.sentiment = {self.sentiment: "none", score : 0}
-  def importFromJSON(JSON):
+  def igimportFromJSON(JSON):
     """
     takes a JSON file as a string and fills out all the concept attributes#
     and topics as expected.
