@@ -1,3 +1,5 @@
+CHATROOMS = []
+
 class Chatroom():
   def __init__(self, uid, concept):
     self.uid = uid
@@ -17,3 +19,7 @@ class Chatroom():
     #important = most important keyword
     #return "chat about" + str(important)
     pass
+  
+  
+def createNewChatroom(concept):
+  pass
