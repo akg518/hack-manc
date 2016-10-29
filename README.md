@@ -8,3 +8,6 @@ testing testing
 
 
 bartek to duza pipa
+
+
+daniel to wieksza pipa
