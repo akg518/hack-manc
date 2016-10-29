@@ -5,14 +5,18 @@ class Chatroom():
     def __init__(self, uid, concept):
         self.uid = uid
         self.concept = concept
-        self.users = []
+        self.users = {}
         self.entries = [] # [(user, text)]
 
     def getText():
         return '\n'.join([': '.join(row) for row in self.entries])
 
-    def add_user(self, user):
-        self.users.append(user)
+    def add_user(self, username, user_ip):
+        #TODO check validation if user already in the chatroom
+        self.users[user_ip] = username
+       
+    def get_user(self, user_ip):
+        return self.users[user_ip]
 
     def add_entry(self, user, text):
         self.entries.append((user, text))
@@ -25,10 +29,11 @@ class Chatroom():
         important = key2[-1][0] + " " + key2[-2][0] + " " + key2[-3][0]
         return str(important)
 
-    def __repr__(self):
+    def get_uid(self):
         return self.uid
 
     def createNewChatroom(self, concept):
+        uid = ""
         while True:
             uid =str(random.randint(0, 100000))
             if uid not in CHATROOMS.keys():
@@ -36,5 +41,6 @@ class Chatroom():
                 global CHATROOMS
                 CHATROOMS.append(new_chatroom)
                 break
+        return uid
 
 

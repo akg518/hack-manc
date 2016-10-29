@@ -19,18 +19,47 @@ def pull_data():
   uid = request.args.get('uid', '', type=string)
   return jsonify (result=CHATROOMS[uid].get_text())
 
+@app.route('/_make_new_chatroom_')
+def make_new_chatroom():
+  global CHATROOMS
+  concept_string = request.args.get('concept_string', '', type=string)
+  username = request.args.get('username', '', type=string)
+  user_ip = request.args.get('user_ip', '', type=string)
+  new_concept = Concept()
+  new_concept.importFromJSON(concept_string)
+  uid = createNewChatroom(concept)
+  CHATROOMS[uid].add_user(username, user_ip)
+  return jsonify(result=uid)
 
-@app.route('/_add_to_chatroom_')
-def add_to_chatroom():
-  chatroom_name = request.args.get('chatroom_uid')
+@app.route('/_add_user_to_chatroom')
+def add_user_to_chatroom():
+  global CHATROOMS
+  uid = request.args.get('uid', '', type=string)
+  username = request.args.get('username', '', type=string)
+  user_ip = request.args.get('user_ip', '', type=string)
+  CHATROOMS[uid].add_user(username, user_ip)
+
+@app.route('/_add_text_to_chatroom_')
+def add_text_to_chatroom():
+  global CHATROOMS
+  uid = request.args.get('chatroom_uid', '', string) # chatroom id
+  user_ip = request.args.get('user_ip', '', string) # user ip
+  entry = request.args.get('entry', '', string) # text to enter
+  username = CHATROOMS[uid].get_user(user_ip)
+  CHATROOMS[uid].add_entry(username, entry)
+
+@app.route('/hello_world')
+def hello_world():
   return jsonify(result="hello world")
 
-
-  
+@app.route('/check_param')
+def check_param():
+  param = request.args.get('param_id', '', string)
+  return jsonify(result = "SERVER RESPONSE: " + param)  
   
 @app.route('/')
 def index():
-  return render_template('index.html')
+  return render_template('main.html')
   
 @app.route('/chatroom/<uid>')
 def chatroom(uid):
