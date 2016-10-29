@@ -33,7 +33,7 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">Chat to Connect<span name="username" class="pull-right"></span></div>
 		<div class="panel-body">
-			<div name="messages"></div>
+			<div id="messagebox" name="messages">MEESSAGES PLACEHOLDER</div>
 		</div>
 		<div class="panel-footer">
 			<div class="row">
@@ -46,5 +46,14 @@
 	</div>
 </div>
 </body>
-<!--<script src="TUTAJ ŹRÓDŁO JS ELOOOOOOOOO"></script>-->
+
+<script>
+	var counter = 0;
+     window.setInterval(
+     function () {
+         counter = counter + 1;
+         document.getElementById("messagebox").innerHTML = "counter: " + counter;
+     }, 1000);
+
+</script>
 </html>
