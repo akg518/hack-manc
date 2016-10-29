@@ -11,4 +11,5 @@ bartek to duza pipa
 
 aa2hh
 daniel to wieksza pipa
+
 bartek b to najwieksza pipa
