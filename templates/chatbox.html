@@ -38,14 +38,17 @@
 		<div class="panel-footer">
 			<div class="row">
 				<span id="fdata"> <!--style="display:none"-->
-					<div class="col-md-8"><input type="text" class="form-control" name="messageInput" placeholder="Message..."></div>
-					<div class="col-md-2"><button class="btn btn-success pull-right" type="button" href=# id="submit_entry"> Submit </button></div>
+					<div class="col-md-8"><input id="inputBox" type="text" class="form-control" name="messageInput" placeholder="Message..."></div>
+
+					<div class="col-md-2"><button onclick="submitText()" class="btn btn-success pull-right" type="button" href=# id="submit_entry"> Submit </button></div>
 				</span>
 			</div>
 		</div>
 	</div>
 </div>
 </body>
+
+<script type="application/javascript" src="http://l2.io/ip.js?var=myip"></script>
 
 <script>
 	var counter = 0;
@@ -54,6 +57,17 @@
          counter = counter + 1;
          document.getElementById("messagebox").innerHTML = "counter: " + counter;
      }, 1000);
+
+     getTxtToSubmit = function(){
+     	return document.getElementById("inputBox").value;  
+     }
+
+     submitText = function(){
+
+     	alert("your ip address: " + myip + "\nYour text: " + getTxtToSubmit());
+     }
+
+
 
 </script>
 </html>
