@@ -14,8 +14,23 @@ CHATROOM_DATA = ["it is pretty rainy today, I don't want to go outside",
                  "that chocolate from coop is really good!",
                  "which country has the best weather?",
                  "I need more caffeine - I'm so tired!",
-                 "Today's tuna sandwitches were really nice!"
+                 "Today's tuna sandwitches were really nice!",
+                 "Does anyone know where I can get fresh cucamber",
+                 "I hate when my jeans are too tight",
+                 "I have found a fantastic pizza place in my neighbourhood",
+                 "It's important to wear matching pairs of clothing",
+                 "How can people add pickles to salads?!",
+                 "I'm trying to save up for the new pair of shoes",
+                 "do you think it always rains in scotland?",
+                 "I'm looking for a substitue for bread, I really need to go on diet",
+                 "Black clothes make me look fat",
+                 "I have tried the best salami and cheese sandwich ever",
+                 "It's been a while since I had a soup",
+                 "Off for a sunday dinner with family",
+                 "What should I wear for a formal dinner with my work team",
+                 "People shouldn't wear black ties with black shirts"
                 ]
+CHATROOM_DATA_UPDATE = False
 
 class Chatroom():
     def __init__(self, uid, concept):
@@ -83,15 +98,12 @@ def loadChatrooms(filename):
   f.close()
   
 if __name__=="__main__":
-  createTempChatrooms(CHATROOM_DATA)
-  print "---OLD---"
-  for key in CHATROOMS:
-    print CHATROOMS[key].getTopWords()
-  saveCurrentChatrooms("dumps.json")
+  if CHATROOM_DATA_UPDATE:
+    createTempChatrooms(CHATROOM_DATA)
+    saveCurrentChatrooms("dumps.json")
   loadChatrooms("dumps.json")
-  print "---NEW---"
-  for key in CHATROOMS:
-    print CHATROOMS[key].getTopWords()
+  
+  
   
 
 
