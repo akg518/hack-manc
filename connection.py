@@ -36,7 +36,7 @@ def get_suggestions():
 @app.route('/_pull_data_')
 def pull_data():
   uid = request.args.get('uid', '', type=str)
-  return jsonify (result=SERVER_CHATROOMS[uid].get_text())
+  return jsonify (result=SERVER_CHATROOMS[uid].getText())
 
 @app.route('/_make_new_chatroom_')
 def make_new_chatroom():
@@ -57,7 +57,6 @@ def add_user_to_chatroom():
   username = request.args.get('username', '', type=str)
   user_ip = request.args.get('user_ip', '', type=str)
   SERVER_CHATROOMS[uid].add_user(username, user_ip)
-  print uid
   return jsonify(result="success!")
 
 @app.route('/_add_text_to_chatroom_')
@@ -68,8 +67,9 @@ def add_text_to_chatroom():
   entry = request.args.get('entry', '', type=str) # text to enter
   if user_ip not in SERVER_CHATROOMS[uid].users:
     SERVER_CHATROOMS[uid].add_user("anonymous", "user_ip")
-  username = CHATROOMS[uid].get_user(user_ip)
-  CHATROOMS[uid].add_entry(username, entry)
+  username = SERVER_CHATROOMS[uid].get_user(user_ip)
+  SERVER_CHATROOMS[uid].add_entry(username, entry)
+  return jsonify(result="success!")
   
 @app.route('/hello_world')
 def hello_world():

@@ -39,7 +39,7 @@ class Chatroom(object):
       self.users = {}
       self.entries = [] # [(user, text)] 
 
-    def getText():
+    def getText(self):
         return '\n'.join([': '.join(row) for row in self.entries])
 
     def add_user(self, username, user_ip):
