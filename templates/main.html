@@ -16,7 +16,7 @@
 	<div class="container text-center">
 		<h1><img src="https://s16.postimg.org/vcar7srud/Connect_Me_Logo.png" style="width:600px;height:200px;"></h1>
 	</div>
-	<div class="container"style="width:400px">
+	<div class="container"style="width:80%">
 	<div class="panel panel-default"style="background-color: rgba(245, 245, 245, 0.5);">
 		<div class="panel-heading">Express yourself<span id="username" ></span></div>
 		<div class="panel-footer"style="background-color: rgba(245, 245, 245, 0.5);">
@@ -33,7 +33,7 @@
 			</div>
 			<div class="row">
 				<span id="topicListPlaceholder">
-					<div style="white-space: pre;" class="col-md-12"><span id="topicList">topicList Here!</span></div>
+					<div style="font: arial; font-size: 14pt; font-color: blue; cursor:pointer; white-space: pre;" class="col-md-12"><span id="topicList">topicList Here!</span></div>
 				</span>
 			</div>
 		</div>
@@ -67,7 +67,7 @@
    	var prettyStr = "";
    	if (listLength>0){
    		for (var i = 0; i<listLength; i++){
-   	 		prettyStr += "<span onclick='getToChatroom("+list[i][2]+");'> ";
+   	 		prettyStr += "<span onclick=\"getToChatroom("+list[i][2]+",\'"+list[i][0]+"\');\"> ";
    			prettyStr += list[i][0];
    			prettyStr += " - ";
    			prettyStr += parseFloat(list[i][1]).toFixed(2);
@@ -78,7 +78,7 @@
    	return prettyStr;
    };
 
-   function getToChatroom(uid)
+   function getToChatroom(uid,title)
    {
    	$(function()
    	 {
@@ -88,7 +88,8 @@
          uid: uid,
          user_ip: myip
        	},
-       	function(data) {window.location = "/chatroom/"+uid;
+       	function(data) {window.location = 
+       		"/chatroom/"+uid+"?title="+title;
        	});
        	return false;
    	 });

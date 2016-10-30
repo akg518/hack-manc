@@ -88,5 +88,6 @@ def index():
   
 @app.route('/chatroom/<uid>')
 def chatroom(uid):
-  return render_template('chatroom.html', uid=uid, chatroom_ids = SERVER_CHATROOMS.keys())
+  title = request.args.get('title', '', type=str)
+  return render_template('chatroom.html', uid=uid, title=title, chatroom_ids = SERVER_CHATROOMS.keys())
 

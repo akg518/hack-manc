@@ -60,7 +60,7 @@ class Chatroom(object):
         top3 = sorted(chat_markers, key = lambda x: x[1], reverse=True)
         top3 = top3[:min(3, len(top3))]
         top3 = [entry[0] for entry in top3]
-        result = "Let's chat about " + ', '.join(top3[:-1]) + " and " + top3[-1]
+        result = "Let us chat about " + ', '.join(top3[:-1]) + " and " + top3[-1]
         return result
       
     def get_uid(self):

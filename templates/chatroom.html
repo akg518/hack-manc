@@ -42,9 +42,9 @@
 	<div class="container" id="cont" style="width:700px;">
 		{% if uid in chatroom_ids %}
 	<div class="panel panel-default"style="background-color: rgba(245, 245, 245, 0.5);">
-		<div class="panel-heading">Chat to Connect<span name="username" class="pull-right"></span></div>
+		<h1><div id="titleDiv" class="panel-heading">{{title}}<span name="username" class="pull-right"></span></div></h1>
 		<div class="panel-body">
-			<div id="messagebox" name="messages">MEESSAGES PLACEHOLDER</div>
+			<div id="messagebox" name="messages"></div>
 		</div>
 		<div class="panel-footer">
 			<div class="row">
@@ -67,7 +67,7 @@
 
 
 <script>
-
+    
 
     
       window.setInterval(
@@ -91,8 +91,7 @@
             user_ip: myip, 
             entry: getTxtToSubmit()
           },
-           function(data) {alert(data.result);
-
+           function(data) {;
           });
 			   return false;
       });

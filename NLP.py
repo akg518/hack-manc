@@ -27,5 +27,3 @@ def getTaxonomy(string):
     response = alchemyapi.taxonomy('text', inputText)
 
     return response
-  
-print getKeywords("this weather sucks")
