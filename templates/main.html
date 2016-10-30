@@ -88,10 +88,12 @@
          uid: uid,
          user_ip: myip
        	},
-       	function(data) {alert(data.result);
+       	function(data) {window.location = "/chatroom/"+uid;
        	});
        	return false;
    	 });
+   
+
    };
   </script>
 
