@@ -31,22 +31,22 @@ def get_suggestions():
   print tempResult
   return jsonify(result=tempResult)
 
-# @app.route('/_pull_data_')
-# def pull_data():
-#   uid = request.args.get('uid', '', type=str)
-#   return jsonify (result=CHATROOMS[uid].get_text())
+@app.route('/_pull_data_')
+def pull_data():
+  uid = request.args.get('uid', '', type=str)
+  return jsonify (result=SERVER_CHATROOMS[uid].get_text())
 
-# @app.route('/_make_new_chatroom_')
-# def make_new_chatroom():
-#   global CHATROOMS
-#   concept_string = request.args.get('concept_string', '', type=string)
-#   username = request.args.get('username', '', type=str)
-#   user_ip = request.args.get('user_ip', '', type=str)
-#   new_concept = Concept()
-#   new_concept.importFromJSON(concept_string)
-#   uid = createNewChatroom(concept)
-#   CHATROOMS[uid].add_user(username, user_ip)
-#   return jsonify(result=uid)
+@app.route('/_make_new_chatroom_')
+def make_new_chatroom():
+  global SERVER_CHATROOMS
+  concept_string = request.args.get('concept_string', '', type=str)
+  username = request.args.get('username', '', type=str)
+  user_ip = request.args.get('user_ip', '', type=str)
+  new_concept = Concept()
+  new_concept.importFromText(concept_string)
+  uid = createNewChatroom(concept)
+  SERVER_CHATROOMS[uid].add_user(username, user_ip)
+  return jsonify(result=uid)
 
 # @app.route('/_add_user_to_chatroom')
 # def add_user_to_chatroom():
@@ -83,5 +83,5 @@ def index():
   
 @app.route('/chatroom/<uid>')
 def chatroom(uid):
-  return render_template('chatroom.html', uid=uid)
+  return render_template('chatroom.html', uid=uid, chatroom_ids = SERVER_CHATROOMS.keys())
 

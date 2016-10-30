@@ -18,7 +18,7 @@
     $('button#submit').bind('click', function() {
       $.getJSON($SCRIPT_ROOT + '/_add_text_to_chatroom_', {
         entry: $('input[name="messageInput"]').val(), 
-        uid: uid, //might be problematic
+        uid: uid, 
         user_ip: myip
       }, function(data) {
        alert(data.result);
@@ -53,6 +53,7 @@
 		<h1><img src="https://s16.postimg.org/vcar7srud/Connect_Me_Logo.png" style="width:600px;height:200px;"></h1>
 	</div>
 	<div class="container" style="width:700px;">
+		{% if uid in chatroom_ids %}
 	<div class="panel panel-default"style="background-color: rgba(245, 245, 245, 0.5);">
 		<div class="panel-heading">Chat to Connect<span name="username" class="pull-right"></span></div>
 		<div class="panel-body">
@@ -70,6 +71,9 @@
 			</div>
 		</div>
 	</div>
+		{% else %}
+		<h1> 404 - not found!</h1>
+		{% endif %}
 </div>
 </body>
 
