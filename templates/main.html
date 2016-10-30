@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
+
+
 <head>
   <link rel="stylesheet" type="text/css" href="chat.css">
   <title>Connect.me</title>
@@ -28,15 +31,21 @@
 					<div class="col-md-2"><button class="btn btn-success" type="button" id="submit"> Submit </button></div>
 				</span>
 			</div>
+			<div class="row">
+				<span id="topicListPlaceholder">
+					<div style="white-space: pre;" class="col-md-12"><span id="topicList">topicList Here!</span></div>
+				</span>
+			</div>
 		</div>
 	</div>
 </div>
 </body>
 </html>
+  <script type="application/javascript" src="http://l2.io/ip.js?var=myip"></script>
 
 <script type=text/javascript>
     $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-  </script>
+ </script>
 
 <script type=text/javascript>
   var uid = {{uid}}
@@ -46,10 +55,44 @@
       $.getJSON($SCRIPT_ROOT + '/_get_suggestions_', {
         input_text: $('input[name="sentenceInput"]').val()
       }, function(data) {
-       alert(data.result);
+
+      document.getElementById("topicList").innerHTML = interpretSuggestionList(data.result);
       });
       return false;
     });
   });
 
+   interpretSuggestionList = function(list){
+   	var listLength = list.length;
+   	var prettyStr = "";
+   	if (listLength>0){
+   		for (var i = 0; i<listLength; i++){
+   	 		prettyStr += "<span onclick='getToChatroom("+list[i][2]+");'> ";
+   			prettyStr += list[i][0];
+   			prettyStr += " - ";
+   			prettyStr += parseFloat(list[i][1]).toFixed(2);
+   			prettyStr += "</span>";
+   			prettyStr += "\n";
+   	}
+   	}
+   	return prettyStr;
+   };
+
+   function getToChatroom(uid)
+   {
+   	$(function()
+   	 {
+   	 	$.getJSON($SCRIPT_ROOT + '/_add_user_to_chatroom', 
+   	 	{
+         username: document.getElementById("nameuser").value,
+         uid: uid,
+         user_ip: myip
+       	},
+       	function(data) {alert(data.result);
+       	});
+       	return false;
+   	 });
+   };
   </script>
+
+

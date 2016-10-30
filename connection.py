@@ -16,11 +16,13 @@ def setup():
   global SETUP_FLAG
   global SERVER_CHATROOMS
   loadChatrooms("dumps.json", SERVER_CHATROOMS)
+  print "done!";
   SETUP_FLAG = True
   
 
 @app.route('/_get_suggestions_')
 def get_suggestions():
+  print "hello from the other side"
   input_text = request.args.get('input_text', '', type=str)
   if input_text == "":
     return ""
@@ -51,10 +53,12 @@ def make_new_chatroom():
 @app.route('/_add_user_to_chatroom')
 def add_user_to_chatroom():
   global SERVER_CHATROOMS
-  uid = request.args.get('uid', '', type=string)
+  uid = request.args.get('uid', '', type=str)
   username = request.args.get('username', '', type=str)
   user_ip = request.args.get('user_ip', '', type=str)
   SERVER_CHATROOMS[uid].add_user(username, user_ip)
+  print uid
+  return jsonify(result="success!")
 
 @app.route('/_add_text_to_chatroom_')
 def add_text_to_chatroom():
