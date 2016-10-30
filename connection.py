@@ -7,7 +7,7 @@ app=Flask(__name__)
 
 # @app.route('/_get_suggestions_')
 # def get_suggestions():
-#   input_text = request.args.get('input_text', '', type=string)
+#   input_text = request.args.get('input_text', '', type=str)
 #   if input_text = ""
 #     return
 #   input_concept = Concept()
@@ -16,15 +16,15 @@ app=Flask(__name__)
 
 # @app.route('/_pull_data_')
 # def pull_data():
-#   uid = request.args.get('uid', '', type=string)
+#   uid = request.args.get('uid', '', type=str)
 #   return jsonify (result=CHATROOMS[uid].get_text())
 
 # @app.route('/_make_new_chatroom_')
 # def make_new_chatroom():
 #   global CHATROOMS
 #   concept_string = request.args.get('concept_string', '', type=string)
-#   username = request.args.get('username', '', type=string)
-#   user_ip = request.args.get('user_ip', '', type=string)
+#   username = request.args.get('username', '', type=str)
+#   user_ip = request.args.get('user_ip', '', type=str)
 #   new_concept = Concept()
 #   new_concept.importFromJSON(concept_string)
 #   uid = createNewChatroom(concept)
@@ -35,26 +35,26 @@ app=Flask(__name__)
 # def add_user_to_chatroom():
 #   global CHATROOMS
 #   uid = request.args.get('uid', '', type=string)
-#   username = request.args.get('username', '', type=string)
-#   user_ip = request.args.get('user_ip', '', type=string)
+#   username = request.args.get('username', '', type=str)
+#   user_ip = request.args.get('user_ip', '', type=str)
 #   CHATROOMS[uid].add_user(username, user_ip)
 
 # @app.route('/_add_text_to_chatroom_')
 # def add_text_to_chatroom():
 #   global CHATROOMS
-#   uid = request.args.get('chatroom_uid', '', string) # chatroom id
-#   user_ip = request.args.get('user_ip', '', string) # user ip
-#   entry = request.args.get('entry', '', string) # text to enter
+#   uid = request.args.get('chatroom_uid', '', type=str) # chatroom id
+#   user_ip = request.args.get('user_ip', '', type=str) # user ip
+#   entry = request.args.get('entry', '', type=str) # text to enter
 #   username = CHATROOMS[uid].get_user(user_ip)
 #   CHATROOMS[uid].add_entry(username, entry)
 
 @app.route('/hello_world')
 def hello_world():
-  return jsonify(result="hello world")
+  return jsonify(result="heb world")
 
 @app.route('/check_param')
 def check_param():
-  param = request.args.get('param_id', '', string)
+  param = request.args.get('param', '', type=str)
   return jsonify(result = "SERVER RESPONSE: " + param)  
   
 @app.route('/')
