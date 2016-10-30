@@ -28,3 +28,4 @@ def getTaxonomy(string):
 
     return response
   
+print getKeywords("this weather sucks")

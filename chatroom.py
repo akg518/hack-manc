@@ -55,13 +55,15 @@ class Chatroom(object):
             self.entries = self.entries[-20:]
 
     def getTopWords(self):
-        key2 = sorted(self.concept.keywords.items(), key=lambda x: x[1])
-        result = "chat about "
-        for keyNum in xrange(len(key2)):
-          result += ", " + str(key2[-1*keyNum][0])
-          if keyNum==3:
-            break
-        return str(result)
+        chat_markers = self.concept.keywords.items()
+        chat_markers.extend([(topic[0][topic[0].rfind('/'):], topic[1]) for topic in self.concept.topics.items()]) # create markers with the most important categories and score
+        print chat_markers
+        result = "Chat about "
+#         for keyNum in xrange(len(key2)):
+#           result += ", " + str(key2[-keyNum][0])
+#           if keyNum==3:
+#             break
+#         return str(result)
 
     def get_uid(self):
         return self.uid
@@ -83,11 +85,11 @@ def createNewChatroom(concept, chatroomList):
             break
     return uid
 
-def createTempChatrooms(chatroom_data):
+def createTempChatrooms(chatroom_data, chatroomList):
   for input_string in chatroom_data:
     new_concept = Concept()
     new_concept.importFromText(input_string)
-    createNewChatroom(new_concept)
+    createNewChatroom(new_concept, chatroomList)
     
 def saveCurrentChatrooms(filename, chatroomList):
   f = open(filename, 'w')
@@ -95,22 +97,15 @@ def saveCurrentChatrooms(filename, chatroomList):
   f.close()
   
 def loadChatrooms(filename, chatroomList):
-  print "chatroom class here!"
   chatroomList.clear()
   f = open(filename, 'r')
   jsondict = jsonpickle.decode(f.read())
   for key in jsondict:
-    #print str(key)+  ": " + str(jsondict[key])
-    print type(jsondict[key])
     if type(jsondict[key]) is dict:
       chatroomList[key]=Chatroom.fromDict(jsondict[key])
       chatroomList[key].concept = Concept.fromDict(chatroomList[key].concept)
     else:
       chatroomList[key]=jsondict[key]
-  print "chatroom lenght:" + str(len(chatroomList))
-  for key in chatroomList:
-    print key
-    print chatroomList[key].concept
   f.close()
   
 if __name__=="__main__":
@@ -119,8 +114,11 @@ if __name__=="__main__":
     saveCurrentChatrooms("dumps.json", TEST_CHATROOMS)
   loadChatrooms("dumps.json", TEST_CHATROOMS)
   compare_concept=Concept()
-  compare_concept.importFromText("this weather sucks - it is far too rainy!")
-  print compare_concept.top5chatrooms(TEST_CHATROOMS)
+  compare_concept.importFromText("this weather sucks - it is far too rainy! I would far prefer if it was sunny.")
+  #compare_concept.top5chatrooms(TEST_CHATROOMS)
+  uid = createNewChatroom(compare_concept, TEST_CHATROOMS)
+  TEST_CHATROOMS[uid].getTopWords()
+  
   
   
   
