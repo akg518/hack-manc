@@ -65,9 +65,10 @@ def add_text_to_chatroom():
   uid = request.args.get('uid', '', type=str) # chatroom id
   user_ip = request.args.get('user_ip', '', type=str) # user ip
   entry = request.args.get('entry', '', type=str) # text to enter
-#   if user_ip not in SERVER_CHATROOMS[uid].users:
-#     SERVER_CHATROOMS[uid].add_user("anonymous", "user_ip")
-  SERVER_CHATROOMS[uid].add_entry(user_ip, entry)
+  if user_ip not in SERVER_CHATROOMS[uid].users:
+    SERVER_CHATROOMS[uid].add_user("anonymous", "user_ip")
+  username = SERVER_CHATROOMS[uid].get_user(user_ip)
+  SERVER_CHATROOMS[uid].add_entry(username, entry)
   return jsonify(result="success!")
   
 @app.route('/hello_world')

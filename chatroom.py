@@ -47,11 +47,10 @@ class Chatroom(object):
         self.users[user_ip] = username
        
     def get_user(self, user_ip):
-        print self.users
         return self.users[user_ip]
 
-    def add_entry(self, user_ip, text):
-        self.entries.append((self.get_user(user_ip), text))
+    def add_entry(self, user, text):
+        self.entries.append((user, text))
         if len(self.entries) > 20:
             self.entries = self.entries[-20:]
 
@@ -61,7 +60,7 @@ class Chatroom(object):
         top3 = sorted(chat_markers, key = lambda x: x[1], reverse=True)
         top3 = top3[:min(3, len(top3))]
         top3 = [entry[0] for entry in top3]
-        result = "Let's chat about " + ', '.join(top3[:-1]) + " and " + top3[-1]
+        result = "Let us chat about " + ', '.join(top3[:-1]) + " and " + top3[-1]
         return result
       
     def get_uid(self):
@@ -112,23 +111,12 @@ if __name__=="__main__":
     createTempChatrooms(CHATROOM_DATA, TEST_CHATROOMS)
     saveCurrentChatrooms("dumps.json", TEST_CHATROOMS)
   loadChatrooms("dumps.json", TEST_CHATROOMS)
-#   print TEST_CHATROOMS['991'].getTopWords()
+  print TEST_CHATROOMS['991'].getTopWords()
 #   compare_concept=Concept()
 #   compare_concept.importFromText("this weather sucks - it is far too rainy! I would far prefer if it was sunny.")
 #   #compare_concept.top5chatrooms(TEST_CHATROOMS)
 #   uid = createNewChatroom(compare_concept, TEST_CHATROOMS)
 #   TEST_CHATROOMS[uid].getTopWords()
-
-TEST_CHATROOMS['991'].add_user('adrian', '1')
-TEST_CHATROOMS['991'].add_user('bartek', '2')
-TEST_CHATROOMS['991'].add_user('daniel', '3')
-TEST_CHATROOMS['991'].add_entry('1', "hello")
-TEST_CHATROOMS['991'].add_entry('2', "hi")
-
-print TEST_CHATROOMS['991'].entries
-
-
-
   
   
   
