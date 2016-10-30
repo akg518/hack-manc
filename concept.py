@@ -53,17 +53,14 @@ class Concept:
     for keyword in self.keywords:
       if keyword in other.keywords:
         score_addon = self.keywords[keyword] * other.keywords[keyword] * Concept.keyword_weight
-        print "addon " + str(score_addon) + " for keyword " + keyword
         similarity_ranking += score_addon
         
     for topic in self.topics:
       if topic in other.topics:
         score_addon = self.topics[topic] * other.topics[topic] * Concept.topic_weight
-        print "addon " + str(score_addon) + " for topic " + topic
         similarity_ranking += score_addon
         
     score_addon = self.sentiment*other.sentiment * Concept.sentiment_weight
-    print "addon " + str(score_addon) + " for overall sentiment"
     similarity_ranking += score_addon
       
     return similarity_ranking
@@ -74,11 +71,10 @@ class Concept:
     """
     top5 = []
     scorings = {}
-    for chatroom in chatroomList:
-      scorings[chatroom.id] = self.compare(chatroom.concept)
-    
-    dic2 = sorted(scorings.items(), key=lambda x: x[1])
-    top5 = dic2[-5:]
+    for uid in chatroomList:
+      scorings[uid] = self.compare(chatroomList[uid].concept)
+    top5 = sorted(scorings.items(), key=lambda x: x[1], reverse=True)[:5]
+    print "top5: " + str(top5)
     return top5
   
   def __str__(self):
