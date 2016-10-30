@@ -75,12 +75,13 @@
 	
      getTxtToSubmit = function()
 		 {
-     	return document.getElementById("inputBox").value;  
+     	return document.getElementById("inputBox").value;
      }
 		 
      submitText = function () 
 		 {
-         $.getJSON($SCRIPT_ROOT + '/_add_text_to_chatroom_', {uid: uid, user_ip: myip, entry: getTxtToSubmit()});
+         //$.getJSON($SCRIPT_ROOT + '/_add_text_to_chatroom_', {uid: uid, user_ip: myip, entry: getTxtToSubmit()});
+			   document.getElementById("messagebox").innerHTML(getTxtToSubmit());
 		 }
 </script>
 </html>

@@ -56,9 +56,9 @@ class Chatroom(object):
 
     def getTopWords(self):
         key2 = sorted(self.concept.keywords.items(), key=lambda x: x[1])
-        result = ""
+        result = "chat about "
         for keyNum in xrange(len(key2)):
-          result += " " + str(key2[-1*keyNum][0])
+          result += ", " + str(key2[-1*keyNum][0])
           if keyNum==3:
             break
         return str(result)
