@@ -11,7 +11,7 @@
 </head>
 <body background="http://s18.postimg.org/aiyu7cffr/Connect_Me_BG2.jpg">
 	<div class="container text-center">
-		<h1><img src="ConnectMeLogo.PNG" style="width:600px;height:200px;"></h1>
+		<h1><img src="https://s16.postimg.org/vcar7srud/Connect_Me_Logo.png" style="width:600px;height:200px;"></h1>
 	</div>
 	<div class="container"style="width:400px">
 	<div class="panel panel-default"style="background-color: rgba(245, 245, 245, 0.5);">
@@ -24,8 +24,8 @@
 			</div>
 			<div class="row">
 				<span id="USTAW">
-					<div class="col-md-8"><input type="text" class="form-control" id="messageInput" placeholder="Try: 'My work is depressing'"></div>
-					<div class="col-md-2"><button class="btn btn-success" type="button" id="subdata"> Submit </button></div>
+					<div class="col-md-8"><input type="text" class="form-control" name="sentenceInput" id="messageInput" placeholder="Try: 'My work is depressing'"></div>
+					<div class="col-md-2"><button class="btn btn-success" type="button" id="submit"> Submit </button></div>
 				</span>
 			</div>
 		</div>
@@ -33,3 +33,23 @@
 </div>
 </body>
 </html>
+
+<script type=text/javascript>
+    $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+  </script>
+
+<script type=text/javascript>
+  var uid = {{uid}}
+    
+  $(function() {
+    $('button#submit').bind('click', function() {
+      $.getJSON($SCRIPT_ROOT + '/_get_suggestions_', {
+        input_text: $('input[name="sentenceInput"]').val()
+      }, function(data) {
+       alert(data.result);
+      });
+      return false;
+    });
+  });
+
+  </script>
