@@ -1,34 +1,28 @@
 import random
-import json
+import jsonpickle
+from concept import Concept
 
 CHATROOMS = {}  #{uid:Chatroom}
 CHATROOM_DATA = ["it is pretty rainy today, I don't want to go outside",
                  "I wander what to eat for lunch - maybe some stir fry?",
-                 "I want new cook up some new recipes."
-                 "it's a really nice weather today - I should go outside and play in the park!"
-                 "camembert cheese is the best cheese"
-                 "I'm tired, I need to get some fresh air"
-                 "It's really cold outside, I should buy a new jacket"
-                 "what is the best type of coffee?"
-                 "that chocolate from coop is really good!"
-                 "which country has the best weather?"
-                 "I need more caffeine - I'm so tired!"
+                 "I want new cook up some new recipes.",
+                 "it's a really nice weather today - I should go outside and play in the park!",
+                 "camembert cheese is the best cheese",
+                 "I'm tired, I need to get some fresh air",
+                 "It's really cold outside, I should buy a new jacket",
+                 "what is the best type of coffee?",
+                 "that chocolate from coop is really good!",
+                 "which country has the best weather?",
+                 "I need more caffeine - I'm so tired!",
                  "Today's tuna sandwitches were really nice!"
                 ]
 
 class Chatroom():
-    def __init__(self, *args, **kwargs):
-      """
-      two modes: either Chatroom(uid, concept)
-      or Chatroom(JSONString = "JSON")
-      """
-        if "JSONString" in kwargs:
-          self.__dict__ = json.loads(kwargs[JSONString])
-        else:
-          self.uid = args[0]
-          self.concept = concept
-          self.users = {}
-          self.entries = [] # [(user, text)]        
+    def __init__(self, uid, concept):
+      self.uid=uid
+      self.concept = concept
+      self.users = {}
+      self.entries = [] # [(user, text)] 
 
     def getText():
         return '\n'.join([': '.join(row) for row in self.entries])
@@ -45,50 +39,59 @@ class Chatroom():
         if len(self.entries) > 20:
             self.entries = self.entries[-20:]
 
-    def __str__(self):
-        key1 = self.concept.keywords
-        key2 = sorted(key1.items(), key=lambda x: x[1])
-        important = key2[-1][0] + " " + key2[-2][0] + " " + key2[-3][0]
-        return str(important)
+    def getTopWords(self):
+        key2 = sorted(self.concept.keywords.items(), key=lambda x: x[1])
+        result = ""
+        for keyNum in xrange(len(key2)):
+          result += " " + str(key2[-1*keyNum][0])
+          if keyNum==3:
+            break
+        return str(result)
 
     def get_uid(self):
         return self.uid
       
-    def toJSON(self):
-      return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
-    
-    @staticmethod
-    def fromJSON(JSONString):
-      
 
-def createNewChatroom(self, concept):
+def createNewChatroom(concept):
+    global CHATROOMS
     uid = ""
     while True:
         uid =str(random.randint(0, 100000))
         if uid not in CHATROOMS.keys():
             new_chatroom = Chatroom(uid, concept)
-            global CHATROOMS
-            CHATROOMS.append(new_chatroom)
+            CHATROOMS[uid]=new_chatroom
             break
     return uid
 
 def createTempChatrooms(chatroom_data):
   for input_string in chatroom_data:
     new_concept = Concept()
+    new_concept.importFromText(input_string)
+    createNewChatroom(new_concept)
     
 def saveCurrentChatrooms(filename):
   global CHATROOMS
   f = open(filename, 'w')
-  f.write(json.dumps(CHATROOMS, sort_keys=True))
+  f.write(jsonpickle.encode(CHATROOMS))
   f.close()
   
 def loadChatrooms(filename):
   global CHATROOMS
+  CHATROOMS.clear()
   f = open(filename, 'r')
-  CHATROOMS = json.loads(f.read())
+  CHATROOMS = jsonpickle.decode(f.read())
   f.close()
   
-
-        
+if __name__=="__main__":
+  createTempChatrooms(CHATROOM_DATA)
+  print "---OLD---"
+  for key in CHATROOMS:
+    print CHATROOMS[key].getTopWords()
+  saveCurrentChatrooms("dumps.json")
+  loadChatrooms("dumps.json")
+  print "---NEW---"
+  for key in CHATROOMS:
+    print CHATROOMS[key].getTopWords()
+  
 
 

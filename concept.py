@@ -4,7 +4,6 @@ from NLP import getTaxonomy, getKeywords
 
 
 class Concept:
-
   keyword_weight = 0.4
   topic_weight = 0.4
   sentiment_weight = 0.2  
@@ -89,17 +88,16 @@ class Concept:
     result += "sentiment: " + str(self.sentiment)
     return result
     
+if __name__=="__main__":
+  c = Concept()
+  d = Concept()
+  d.importFromText("its pretty cloudy today, I'm hoping for the some sun!")
+  c.importFromText("Today is a really good weather. I like how sunny it is!")
 
-
-c = Concept()
-d = Concept()
-c.importFromText("Today is a really good weather. I like how sunny it is!")
-d.importFromText("its pretty cloudy today, I'm hoping for the some sun!")
-
-print "C DATA"
-print c
-print "D DATA"
-print d
-print "COMPARISON"
-print "relevance" + str(c.compare(d))
+  print "C DATA"
+  print c
+  print "D DATA"
+  print d
+  print "COMPARISON"
+  print "relevance" + str(c.compare(d))
 
