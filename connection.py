@@ -66,7 +66,6 @@ def add_text_to_chatroom():
     SERVER_CHATROOMS[uid].add_user("anonymous", "user_ip")
   username = CHATROOMS[uid].get_user(user_ip)
   CHATROOMS[uid].add_entry(username, entry)
-return ""
   
 @app.route('/hello_world')
 def hello_world():
