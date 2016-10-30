@@ -56,15 +56,13 @@ class Chatroom(object):
 
     def getTopWords(self):
         chat_markers = self.concept.keywords.items()
-        chat_markers.extend([(topic[0][topic[0].rfind('/'):], topic[1]) for topic in self.concept.topics.items()]) # create markers with the most important categories and score
-        print chat_markers
-        result = "Chat about "
-#         for keyNum in xrange(len(key2)):
-#           result += ", " + str(key2[-keyNum][0])
-#           if keyNum==3:
-#             break
-#         return str(result)
-
+        chat_markers.extend([(topic[0][topic[0].rfind('/')+1:], topic[1]) for topic in self.concept.topics.items()]) # create markers with the most important categories and score
+        top3 = sorted(chat_markers, key = lambda x: x[1], reverse=True)
+        top3 = top3[:min(3, len(top3))]
+        top3 = [entry[0] for entry in top3]
+        result = "Let's chat about " + ', '.join(top3[:-1]) + " and " + top3[-1]
+        return result
+      
     def get_uid(self):
         return self.uid
 
@@ -113,11 +111,12 @@ if __name__=="__main__":
     createTempChatrooms(CHATROOM_DATA, TEST_CHATROOMS)
     saveCurrentChatrooms("dumps.json", TEST_CHATROOMS)
   loadChatrooms("dumps.json", TEST_CHATROOMS)
-  compare_concept=Concept()
-  compare_concept.importFromText("this weather sucks - it is far too rainy! I would far prefer if it was sunny.")
-  #compare_concept.top5chatrooms(TEST_CHATROOMS)
-  uid = createNewChatroom(compare_concept, TEST_CHATROOMS)
-  TEST_CHATROOMS[uid].getTopWords()
+  print TEST_CHATROOMS['991'].getTopWords()
+#   compare_concept=Concept()
+#   compare_concept.importFromText("this weather sucks - it is far too rainy! I would far prefer if it was sunny.")
+#   #compare_concept.top5chatrooms(TEST_CHATROOMS)
+#   uid = createNewChatroom(compare_concept, TEST_CHATROOMS)
+#   TEST_CHATROOMS[uid].getTopWords()
   
   
   
