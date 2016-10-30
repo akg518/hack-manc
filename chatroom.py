@@ -23,12 +23,12 @@ CHATROOM_DATA = ["it is pretty rainy today, I don't want to go outside",
                  "I'm trying to save up for the new pair of shoes",
                  "do you think it always rains in scotland?",
                  "I'm looking for a substitue for bread, I really need to go on diet",
-                 "Black clothes make me look fat",
-                 "I have tried the best salami and cheese sandwich ever",
-                 "It's been a while since I had a soup",
-                 "Off for a sunday dinner with family",
-                 "What should I wear for a formal dinner with my work team",
-                 "People shouldn't wear black ties with black shirts"
+#                  "Black clothes make me look fat",
+#                  "I have tried the best salami and cheese sandwich ever",
+#                  "It's been a while since I had a soup",
+#                  "Off for a sunday dinner with family",
+#                  "What should I wear for a formal dinner with my work team",
+#                  "People shouldn't wear black ties with black shirts"
                 ]
 CHATROOM_DATA_UPDATE = False
 
@@ -102,6 +102,9 @@ if __name__=="__main__":
     createTempChatrooms(CHATROOM_DATA)
     saveCurrentChatrooms("dumps.json")
   loadChatrooms("dumps.json")
+  compare_concept=Concept()
+  compare_concept.importFromText("this weather sucks - it is far too rainy!")
+  print compare_concept.top5chatrooms(CHATROOMS)
   
   
   
