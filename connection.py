@@ -1,9 +1,17 @@
 from flask import Flask, jsonify, render_template, request
-# from concept import Concept
+from chatroom import *
 # from NLP import getStringInfo
 # from chatroom import *
 
 app=Flask(__name__)
+
+SETUP_FLAG = False
+
+def setup():
+  global SETUP_FLAG
+  loadChatrooms("dumps.json")
+  SETUP_FLAG = True
+  
 
 # @app.route('/_get_suggestions_')
 # def get_suggestions():
@@ -60,6 +68,8 @@ def check_param():
   
 @app.route('/')
 def index():
+  if not SETUP_FLAG:
+    setup()
   return render_template('main.html')
   
 @app.route('/chatroom/<uid>')
