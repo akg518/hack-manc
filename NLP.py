@@ -18,16 +18,6 @@ alchemyapi = AlchemyAPI()
 def getKeywords(string):
     inputText = string
     response = alchemyapi.keywords('text', inputText, {'sentiment': 1})
-
-    if response['status'] == 'OK':
-        for keyword in response['keywords']:
-            print 'keyword: ' + str(keyword)
-            print 'sentiment: ' + str(keyword['sentiment']['type'].encode('utf-8'))
-            print 'relevance' + str(keyword['relevance'])
-            
-    else:
-        print('Error in keyword extaction call: ', response['statusInfo'])
-
     return response
 
 
@@ -36,16 +26,8 @@ def getTaxonomy(string):
     inputText = string
     response = alchemyapi.taxonomy('text', inputText)
 
-    if not response['status'] == 'OK':
-
-        print('Error in taxonomy call: ', response['statusInfo'])
-
     return response
   
-def getSentiment(string):
-  pass
-
-getKeywords("it is a really rainy weather today")
   
   
   
