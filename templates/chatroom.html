@@ -9,32 +9,37 @@
     $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
   </script>
   
+  <script type="application/javascript" src="http://l2.io/ip.js?var=myip"></script>
+
   <script type=text/javascript>
   var uid = {{uid}}
     
-//   $(function() {
-//     $('a#submit').bind('click', function() {
-//       $.getJSON($SCRIPT_ROOT + '/_add_text_to_chatroom_', {
-//         entry: $('input[name="a"]').val(),
-//         uid
 
-//       }, function(data) {
-//         $("#result").text(data.result);
-//       });
-//       return false;
-//     });
-//   });
 
   $(function() {
     $('button#submit').bind('click', function() {
-      $.getJSON( $SCRIPT_ROOT + '/check_param', {
-        param: $('input[name="messageInput"]').val()
+      $.getJSON($SCRIPT_ROOT + '/_add_text_to_chatroom_', {
+        entry: $('input[name="messageInput"]').val(), 
+        uid: uid, //might be problematic
+        user_ip: myip
       }, function(data) {
         alert(data.result);
       });
       return false;
     });
   });
+
+  //FUNCTION BELOW PARSES AND RETURNS TXT FROM SERVER
+  // $(function() {
+  //   $('button#submit').bind('click', function() {
+  //     $.getJSON( $SCRIPT_ROOT + '/check_param', {
+  //       param: $('input[name="messageInput"]').val()
+  //     }, function(data) {
+  //       alert(data.result);
+  //     });
+  //     return false;
+  //   });
+  // });
 
  </script>
 
@@ -74,7 +79,7 @@
 
 
 
-<script type="application/javascript" src="http://l2.io/ip.js?var=myip"></script>
+
 
 <script>
 	var counter = 0;

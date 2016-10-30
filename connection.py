@@ -39,14 +39,15 @@ app=Flask(__name__)
 #   user_ip = request.args.get('user_ip', '', type=str)
 #   CHATROOMS[uid].add_user(username, user_ip)
 
-# @app.route('/_add_text_to_chatroom_')
-# def add_text_to_chatroom():
-#   global CHATROOMS
-#   uid = request.args.get('chatroom_uid', '', type=str) # chatroom id
-#   user_ip = request.args.get('user_ip', '', type=str) # user ip
-#   entry = request.args.get('entry', '', type=str) # text to enter
-#   username = CHATROOMS[uid].get_user(user_ip)
-#   CHATROOMS[uid].add_entry(username, entry)
+@app.route('/_add_text_to_chatroom_')
+def add_text_to_chatroom():
+  global CHATROOMS
+  uid = request.args.get('uid', '', type=str) # chatroom id
+  user_ip = request.args.get('user_ip', '', type=str) # user ip
+  entry = request.args.get('entry', '', type=str) # text to enter
+  return jsonify(result = "SERVER uid: " + uid +"\nuserip: " + user_ip +"\nentry: " + entry);
+  #username = CHATROOMS[uid].get_user(user_ip)
+  #CHATROOMS[uid].add_entry(username, entry)
 
 @app.route('/hello_world')
 def hello_world():
