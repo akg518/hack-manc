@@ -2,7 +2,7 @@ import random
 import jsonpickle
 from concept import Concept
 
-CHATROOMS = {}  #{uid:Chatroom}
+TEST_CHATROOMS = {}
 CHATROOM_DATA = ["it is pretty rainy today, I don't want to go outside",
                  "I wander what to eat for lunch - maybe some stir fry?",
                  "I want new cook up some new recipes.",
@@ -32,7 +32,7 @@ CHATROOM_DATA = ["it is pretty rainy today, I don't want to go outside",
                 ]
 CHATROOM_DATA_UPDATE = False
 
-class Chatroom():
+class Chatroom(object):
     def __init__(self, uid, concept):
       self.uid=uid
       self.concept = concept
@@ -65,16 +65,21 @@ class Chatroom():
 
     def get_uid(self):
         return self.uid
+
+    @staticmethod
+    def fromDict(dicitonary):
+      result = Chatroom(None, None)
+      result.__dict__ = dicitonary
+      return result
       
 
-def createNewChatroom(concept):
-    global CHATROOMS
+def createNewChatroom(concept, chatroomList):
     uid = ""
     while True:
         uid =str(random.randint(0, 100000))
-        if uid not in CHATROOMS.keys():
+        if uid not in chatroomList.keys():
             new_chatroom = Chatroom(uid, concept)
-            CHATROOMS[uid]=new_chatroom
+            chatroomList[uid]=new_chatroom
             break
     return uid
 
@@ -84,27 +89,38 @@ def createTempChatrooms(chatroom_data):
     new_concept.importFromText(input_string)
     createNewChatroom(new_concept)
     
-def saveCurrentChatrooms(filename):
-  global CHATROOMS
+def saveCurrentChatrooms(filename, chatroomList):
   f = open(filename, 'w')
-  f.write(jsonpickle.encode(CHATROOMS))
+  f.write(jsonpickle.encode(chatroomList))
   f.close()
   
-def loadChatrooms(filename):
-  global CHATROOMS
-  CHATROOMS.clear()
+def loadChatrooms(filename, chatroomList):
+  print "chatroom class here!"
+  chatroomList.clear()
   f = open(filename, 'r')
-  CHATROOMS = jsonpickle.decode(f.read())
+  jsondict = jsonpickle.decode(f.read())
+  for key in jsondict:
+    #print str(key)+  ": " + str(jsondict[key])
+    print type(jsondict[key])
+    if type(jsondict[key]) is dict:
+      chatroomList[key]=Chatroom.fromDict(jsondict[key])
+      chatroomList[key].concept = Concept.fromDict(chatroomList[key].concept)
+    else:
+      chatroomList[key]=jsondict[key]
+  print "chatroom lenght:" + str(len(chatroomList))
+  for key in chatroomList:
+    print key
+    print chatroomList[key].concept
   f.close()
   
 if __name__=="__main__":
   if CHATROOM_DATA_UPDATE:
-    createTempChatrooms(CHATROOM_DATA)
-    saveCurrentChatrooms("dumps.json")
-  loadChatrooms("dumps.json")
+    createTempChatrooms(CHATROOM_DATA, TEST_CHATROOMS)
+    saveCurrentChatrooms("dumps.json", TEST_CHATROOMS)
+  loadChatrooms("dumps.json", TEST_CHATROOMS)
   compare_concept=Concept()
   compare_concept.importFromText("this weather sucks - it is far too rainy!")
-  print compare_concept.top5chatrooms(CHATROOMS)
+  print compare_concept.top5chatrooms(TEST_CHATROOMS)
   
   
   

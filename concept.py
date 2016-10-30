@@ -83,6 +83,12 @@ class Concept:
     result += "topics: " + str(self.topics) + '\n'
     result += "sentiment: " + str(self.sentiment)
     return result
+
+  @staticmethod
+  def fromDict(dictionary):
+    result = Concept()
+    result.__dict__=dictionary
+    return result
     
 if __name__=="__main__":
   c = Concept()

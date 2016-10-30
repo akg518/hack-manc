@@ -1,15 +1,21 @@
 from flask import Flask, jsonify, render_template, request
 from chatroom import *
+from concept import Concept
+import jsonpickle
 # from NLP import getStringInfo
 # from chatroom import *
 
 app=Flask(__name__)
 
+SERVER_CHATROOMS= {}
+
 SETUP_FLAG = False
+
 
 def setup():
   global SETUP_FLAG
-  loadChatrooms("dumps.json")
+  global SERVER_CHATROOMS
+  loadChatrooms("dumps.json", SERVER_CHATROOMS)
   SETUP_FLAG = True
   
 
@@ -20,9 +26,8 @@ def get_suggestions():
     return ""
   input_concept = Concept()
   input_concept.importFromText(input_text)
-  suggestion_list = input_concept.top5chatrooms(CHATROOMS)
-  print "chatrooms open: " + str(len(CHATROOMS))
-  tempResult = [(CHATROOMS[entry[0]].getTopWords, entry[1]) for entry in suggestion_list]
+  suggestion_list = input_concept.top5chatrooms(SERVER_CHATROOMS)
+  tempResult = [(SERVER_CHATROOMS[entry[0]].getTopWords(), entry[1]) for entry in suggestion_list]
   print tempResult
   return jsonify(result=tempResult)
 
