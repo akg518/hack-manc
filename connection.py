@@ -13,14 +13,17 @@ def setup():
   SETUP_FLAG = True
   
 
-# @app.route('/_get_suggestions_')
-# def get_suggestions():
-#   input_text = request.args.get('input_text', '', type=str)
-#   if input_text = ""
-#     return
-#   input_concept = Concept()
-#   input_concept.importFromJSON(getStringInfo(input_text))
-#   return jsonify(result=input_concept.top5chatrooms)
+@app.route('/_get_suggestions_')
+def get_suggestions():
+  input_text = request.args.get('input_text', '', type=str)
+  if input_text == "":
+    return ""
+  input_concept = Concept()
+  input_concept.importFromText(input_text)
+  suggestion_list = input_concept.top5chatrooms(CHATROOMS)
+  tempResult = [(CHATROOMS[entry[0]].getTopWords, entry[1]) for entry in suggestion_list]
+  print tempResult
+  return jsonify(result=tempResult)
 
 # @app.route('/_pull_data_')
 # def pull_data():

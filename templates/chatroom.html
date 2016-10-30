@@ -14,8 +14,6 @@
   <script type=text/javascript>
   var uid = {{uid}}
     
-
-
   $(function() {
     $('button#submit').bind('click', function() {
       $.getJSON($SCRIPT_ROOT + '/_add_text_to_chatroom_', {
@@ -23,12 +21,11 @@
         uid: uid, //might be problematic
         user_ip: myip
       }, function(data) {
-        alert(data.result);
+       alert(data.result);
       });
       return false;
     });
   });
-
   //FUNCTION BELOW PARSES AND RETURNS TXT FROM SERVER
   // $(function() {
   //   $('button#submit').bind('click', function() {
@@ -40,7 +37,6 @@
   //     return false;
   //   });
   // });
-
  </script>
 
 <head>
@@ -52,16 +48,19 @@
 
 		
 </head>
-<body>
+<body background="http://s18.postimg.org/aiyu7cffr/Connect_Me_BG2.jpg">
+	<div class="container text-center">
+		<h1><img src="https://s16.postimg.org/vcar7srud/Connect_Me_Logo.png" style="width:600px;height:200px;"></h1>
+	</div>
 	<div class="container" style="width:700px;">
-	<div class="panel panel-default">
+	<div class="panel panel-default"style="background-color: rgba(245, 245, 245, 0.5);">
 		<div class="panel-heading">Chat to Connect<span name="username" class="pull-right"></span></div>
 		<div class="panel-body">
 			<div id="messagebox" name="messages">MEESSAGES PLACEHOLDER</div>
 		</div>
 		<div class="panel-footer">
 			<div class="row">
-				<span id="fdata"> <!--style="display:none"-->
+				<span id="fdata">
 					<div class="col-md-8"><input id="inputBox" type="text" class="form-control" name="messageInput" placeholder="Message..."></div>
 
 					<div class="col-md-2">
@@ -88,17 +87,11 @@
          counter = counter + 1;
          document.getElementById("messagebox").innerHTML = "counter: " + counter;
      }, 1000);
-
      getTxtToSubmit = function(){
      	return document.getElementById("inputBox").value;  
      }
-
      submitText = function(){
-
      	alert("your ip address: " + myip + "\nYour text: " + getTxtToSubmit());
      }
-
-
-
 </script>
 </html>
