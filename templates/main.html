@@ -1,8 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
-
-
 <head>
   <link rel="stylesheet" type="text/css" href="chat.css">
   <title>Connect.me</title>
@@ -12,7 +9,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<body background="http://s18.postimg.org/aiyu7cffr/Connect_Me_BG2.jpg">
+<body background="http://s18.postimg.org/aiyu7cffr/Connect_Me_BG2.jpg"style= "background-size: cover">
 	<div class="container text-center">
 		<h1><img src="https://s16.postimg.org/vcar7srud/Connect_Me_Logo.png" style="width:600px;height:200px;"></h1>
 	</div>
@@ -31,10 +28,12 @@
 					<div class="col-md-2"><button class="btn btn-success" type="button" id="submit"> Submit </button></div>
 				</span>
 			</div>
+			<div id="footer" style = "visibility: visible;" class="panel-footer">
 			<div class="row">
 				<span id="topicListPlaceholder">
-					<div style="white-space: pre;" class="col-md-12"><span id="topicList">topicList Here!</span></div>
+					<div style="white-space: pre;" class="col-md-12"><span id="topicList"></span></div>
 				</span>
+			</div>
 			</div>
 		</div>
 	</div>
@@ -55,13 +54,11 @@
       $.getJSON($SCRIPT_ROOT + '/_get_suggestions_', {
         input_text: $('input[name="sentenceInput"]').val()
       }, function(data) {
-
       document.getElementById("topicList").innerHTML = interpretSuggestionList(data.result);
       });
       return false;
     });
   });
-
    interpretSuggestionList = function(list){
    	var listLength = list.length;
    	var prettyStr = "";
@@ -77,7 +74,6 @@
    	}
    	return prettyStr;
    };
-
    function getToChatroom(uid)
    {
    	$(function()
@@ -93,8 +89,6 @@
        	return false;
    	 });
    
-
    };
   </script>
-
 
