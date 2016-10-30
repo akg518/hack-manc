@@ -28,6 +28,3 @@ def getTaxonomy(string):
 
     return response
   
-  
-  
-  
