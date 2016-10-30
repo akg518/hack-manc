@@ -48,24 +48,26 @@ def make_new_chatroom():
   SERVER_CHATROOMS[uid].add_user(username, user_ip)
   return jsonify(result=uid)
 
-# @app.route('/_add_user_to_chatroom')
-# def add_user_to_chatroom():
-#   global CHATROOMS
-#   uid = request.args.get('uid', '', type=string)
-#   username = request.args.get('username', '', type=str)
-#   user_ip = request.args.get('user_ip', '', type=str)
-#   CHATROOMS[uid].add_user(username, user_ip)
+@app.route('/_add_user_to_chatroom')
+def add_user_to_chatroom():
+  global SERVER_CHATROOMS
+  uid = request.args.get('uid', '', type=string)
+  username = request.args.get('username', '', type=str)
+  user_ip = request.args.get('user_ip', '', type=str)
+  SERVER_CHATROOMS[uid].add_user(username, user_ip)
 
 @app.route('/_add_text_to_chatroom_')
 def add_text_to_chatroom():
-  global CHATROOMS
+  global SERVER_CHATROOMS
   uid = request.args.get('uid', '', type=str) # chatroom id
   user_ip = request.args.get('user_ip', '', type=str) # user ip
   entry = request.args.get('entry', '', type=str) # text to enter
-  return jsonify(result = "SERVER uid: " + uid +"\nuserip: " + user_ip +"\nentry: " + entry);
-  #username = CHATROOMS[uid].get_user(user_ip)
-  #CHATROOMS[uid].add_entry(username, entry)
-
+  if user_ip not in SERVER_CHATROOMS[uid].users:
+    SERVER_CHATROOMS[uid].add_user("anonymous", "user_ip")
+  username = CHATROOMS[uid].get_user(user_ip)
+  CHATROOMS[uid].add_entry(username, entry)
+return ""
+  
 @app.route('/hello_world')
 def hello_world():
   return jsonify(result="heb world")

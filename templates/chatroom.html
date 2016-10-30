@@ -13,19 +13,6 @@
 
   <script type=text/javascript>
   var uid = {{uid}}
-    
-  $(function() {
-    $('button#submit').bind('click', function() {
-      $.getJSON($SCRIPT_ROOT + '/_add_text_to_chatroom_', {
-        entry: $('input[name="messageInput"]').val(), 
-        uid: uid, 
-        user_ip: myip
-      }, function(data) {
-       alert(data.result);
-      });
-      return false;
-    });
-  });
   //FUNCTION BELOW PARSES AND RETURNS TXT FROM SERVER
   // $(function() {
   //   $('button#submit').bind('click', function() {
@@ -65,7 +52,7 @@
 					<div class="col-md-8"><input id="inputBox" type="text" class="form-control" name="messageInput" placeholder="Message..."></div>
 
 					<div class="col-md-2">
-          <button class="btn btn-success pull-right" type="button" href=# id="submit"> Submit </button>
+          <button class="btn btn-success pull-right" type="button" href=# id="submit" onclick="submitText();"> Submit </button>
           </div>
 				</span>
 			</div>
@@ -79,23 +66,21 @@
 
 
 
-
-
-
-
-
 <script>
-	var counter = 0;
      window.setInterval(
      function () {
-         counter = counter + 1;
-         document.getElementById("messagebox").innerHTML = "counter: " + counter;
+         $.getJSON($SCRIPT_ROOT + '/_pull_data_', {uid: uid}, function(data) {
+        		document.getElementById("messagebox").innerHTML(data.result);});
      }, 1000);
-     getTxtToSubmit = function(){
+	
+     getTxtToSubmit = function()
+		 {
      	return document.getElementById("inputBox").value;  
      }
-     submitText = function(){
-     	alert("your ip address: " + myip + "\nYour text: " + getTxtToSubmit());
-     }
+		 
+     submitText = function () 
+		 {
+         $.getJSON($SCRIPT_ROOT + '/_add_text_to_chatroom_', {uid: uid, user_ip: myip, entry: getTxtToSubmit()});
+		 }
 </script>
 </html>
