@@ -21,6 +21,7 @@ def get_suggestions():
   input_concept = Concept()
   input_concept.importFromText(input_text)
   suggestion_list = input_concept.top5chatrooms(CHATROOMS)
+  print "chatrooms open: " + str(len(CHATROOMS))
   tempResult = [(CHATROOMS[entry[0]].getTopWords, entry[1]) for entry in suggestion_list]
   print tempResult
   return jsonify(result=tempResult)
