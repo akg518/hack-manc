@@ -91,3 +91,5 @@ def chatroom(uid):
   title = request.args.get('title', '', type=str)
   return render_template('chatroom.html', uid=uid, title=title, chatroom_ids = SERVER_CHATROOMS.keys())
 
+if __name__  == "__main__":
+  app.run(host='127.0.0.1', port=5000)
