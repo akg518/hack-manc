@@ -1,6 +1,7 @@
 import json
 
 from NLP import getTaxonomy, getKeywords
+from conf import v_print
 
 
 class Concept:
@@ -39,12 +40,6 @@ class Concept:
     for category in taxonomyJSON['taxonomy']:
       self.topics[category['label']] = float(category['score'])
 
-#     for x in self.keywords:
-#       print str(x) + ":" + str(self.keywords[x])
-
-#     for x in self.topics:
-#       str(x) + ":" + str(self.topics[x])
-
   def compare (self, other):
     """
     compares two concepts and returns a relevance score between 0 and 1
@@ -70,12 +65,13 @@ class Concept:
     takes the chatrooms list and returns top 10 most relevant chatrooms
     :returns dictionary of chatrooms in form {unique_id : score}
     """
-    top5 = []
+    #todo change chatromList to conceptList
+    v_print("Checking for most similar concepts...")
     scorings = {}
     for uid in chatroomList:
       scorings[uid] = self.compare(chatroomList[uid].concept)
     top5 = sorted(scorings.items(), key=lambda x: x[1], reverse=True)[:5]
-    print "top5: " + str(top5)
+    v_print("top5: " + str(top5))
     return top5
   
   def __str__(self):

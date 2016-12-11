@@ -6,7 +6,9 @@ stuff should be constant here, I don't want any surprises with runtime  constant
 
 DEBUG = None  # server debug mode
 VERBOSE = None  # print additional commands
-FILESTORE = None  # save and load chatrooms into storage # TODO finish me
+FILESTORE = None  # save and load chatrooms into storage
+
+FILE_STORAGE_TYPE = 'JSON'  # speciies the type of storing technology implemented
 
 
 GLOBALS_DEFINED = False
@@ -25,5 +27,15 @@ def setup_globals(debug, verbose, filestore):
     FILESTORE = filestore
 
     GLOBALS_DEFINED = True
+
+
+def v_print(out_str):
+    """
+    a verbose check print. Easier to type rather than if-ing every time.
+    :param out_str: output to be printed
+    :return: None
+    """
+    if VERBOSE:
+        print(out_str)
 
 

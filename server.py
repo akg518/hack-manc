@@ -38,6 +38,8 @@ def init_server():
     if conf.FILESTORE:
         global SERVER_CHATROOMS
         loadChatrooms("dumps.json", SERVER_CHATROOMS)
+        if conf.VERBOSE:
+            print "chatrooms loaded from storage!"
 
     if conf.VERBOSE:
         print "server setup complete"
@@ -122,6 +124,7 @@ def add_user_to_chatroom():
 @app.route('/_add_text_to_chatroom_')
 def add_text_to_chatroom():
     """
+    JQUERY REQUEST
     adds user message to the server store.
     """
     # TODO: here method will use will callback the recipients of the message.
