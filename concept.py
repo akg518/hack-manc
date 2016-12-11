@@ -68,6 +68,7 @@ class Concept:
   def top5chatrooms(self, chatroomList):
     """
     takes the chatrooms list and returns top 10 most relevant chatrooms
+    :returns dictionary of chatrooms in form {unique_id : score}
     """
     top5 = []
     scorings = {}

@@ -40,6 +40,7 @@ class Chatroom(object):
       self.entries = [] # [(user, text)] 
 
     def getText(self):
+        #TODO fix this, html tags should not exist in a concept entity but in an html rendering entity
         return '</br>'.join(['<strong>'+row[0]+'</strong>: '+row[1] for row in self.entries])
 
     def add_user(self, username, user_ip):
