@@ -62,8 +62,8 @@ class Concept:
 
   def top5chatrooms(self, chatroomList):
     """
-    takes the chatrooms list and returns top 10 most relevant chatrooms
-    :returns dictionary of chatrooms in form {unique_id : score}
+    takes the chatrooms list and returns top 5 most relevant chatrooms
+    :returns a list of tuples in form [(uid, score)]
     """
     #todo change chatromList to conceptList
     v_print("Checking for most similar concepts...")

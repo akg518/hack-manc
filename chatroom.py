@@ -22,27 +22,44 @@ CHATROOM_DATA = ["it is pretty rainy today, I don't want to go outside",
                  "How can people add pickles to salads?!",
                  "I'm trying to save up for the new pair of shoes",
                  "do you think it always rains in scotland?",
-                 "I'm looking for a substitue for bread, I really need to go on diet",
-                ]
+                 "I'm looking for a substitue for bread, I really need to go on diet"]
 CHATROOM_DATA_UPDATE = False
 
 class Chatroom(object):
-    def __init__(self, uid, concept):
-      self.uid=uid
+    def __init__(self, concept):
       self.concept = concept
-      self.users = {}
-      self.entries = [] # [(user, text)] 
+      self.users = {}  # written as ip:username (for now)
+      self.entries = []  # written as [(user, text)]
 
     def getText(self):
         #TODO fix this, html tags should not exist in a concept entity but in an html rendering entity
         return '</br>'.join(['<strong>'+row[0]+'</strong>: '+row[1] for row in self.entries])
 
     def add_user(self, username, user_ip):
+        """
+        Adds a user to the chatroom.
+        :param username: username
+        :param user_ip: user ip
+        :return: Boolean. Success status.
+        """
         #TODO check validation if user already in the chatroom
         self.users[user_ip] = username
+        return True
        
     def get_user(self, user_ip):
         return self.users[user_ip]
+
+    def update_users(self):
+        """
+        checks the staus of each user connection, drops out people no longer found
+        """
+        pass
+
+    def get_total_users(self):
+        """
+        get the total amount of users in the chatroom
+        """
+        return self.users
 
     def add_entry(self, user, text):
         self.entries.append((user, text))
@@ -57,51 +74,32 @@ class Chatroom(object):
         top3 = [entry[0] for entry in top3]
         result = "Let us chat about " + ', '.join(top3[:-1]) + " and " + top3[-1]
         return result
-      
-    def get_uid(self):
-        return self.uid
 
     @staticmethod
     def fromDict(dicitonary):
       result = Chatroom(None, None)
       result.__dict__ = dicitonary
+      if type(result.concept) is dict:
+          result.concept = Concept.fromDict(result.concept)
       return result
       
 
-def createNewChatroom(concept, chatroomList):
-    uid = ""
-    while True:
-        uid =str(random.randint(0, 100000))
-        if uid not in chatroomList.keys():
-            new_chatroom = Chatroom(uid, concept)
-            chatroomList[uid]=new_chatroom
-            break
-    return uid
 
-def createTempChatrooms(chatroom_data, chatroomList):
-  for input_string in chatroom_data:
-    new_concept = Concept()
-    new_concept.importFromText(input_string)
-    createNewChatroom(new_concept, chatroomList)
-    
-def saveCurrentChatrooms(filename, chatroomList):
-  f = open(filename, 'w')
-  f.write(jsonpickle.encode(chatroomList))
-  f.close()
   
 
   
 if __name__=="__main__":
-  if CHATROOM_DATA_UPDATE:
-    createTempChatrooms(CHATROOM_DATA, TEST_CHATROOMS)
-    saveCurrentChatrooms("dumps.json", TEST_CHATROOMS)
-  loadChatrooms("dumps.json", TEST_CHATROOMS)
-  print TEST_CHATROOMS['991'].getTopWords()
-#   compare_concept=Concept()
-#   compare_concept.importFromText("this weather sucks - it is far too rainy! I would far prefer if it was sunny.")
-#   #compare_concept.top5chatrooms(TEST_CHATROOMS)
-#   uid = createNewChatroom(compare_concept, TEST_CHATROOMS)
-#   TEST_CHATROOMS[uid].getTopWords()
+    # if CHATROOM_DATA_UPDATE:
+    #   createTempChatrooms(CHATROOM_DATA, TEST_CHATROOMS)
+    #   saveCurrentChatrooms("dumps.json", TEST_CHATROOMS)
+    # loadChatrooms("dumps.json", TEST_CHATROOMS)
+    # print TEST_CHATROOMS['991'].getTopWords()
+    #   compare_concept=Concept()
+    #   compare_concept.importFromText("this weather sucks - it is far too rainy! I would far prefer if it was sunny.")
+    #   #compare_concept.top5chatrooms(TEST_CHATROOMS)
+    #   uid = createNewChatroom(compare_concept, TEST_CHATROOMS)
+    #   TEST_CHATROOMS[uid].getTopWords()
+    pass
   
   
   

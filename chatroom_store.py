@@ -9,18 +9,17 @@ Currently chatrooms are only stored in memory. Later they will be saved as JSON 
 
 import conf
 from chatroom import Chatroom
-from concept import Concept
 import jsonpickle
 from datetime import datetime
+import random
+import string
 
 class ChatroomStore:
     def __init__(self):
         conf.v_print("setting up chatrooms...")
         self.lastUpdateTime = datetime.now()
-        self.chatrooms = {}  # maps uid to chatroom object or to None if not cached
-
-        # maps uid to concept objects of the chatroom. All concepts are stored in memory for search purposes!
-        self.concepts = {}
+        self.chatrooms = {}  # maps uid to chatroom object
+        self.total_users = 0  # total users across all chatrooms
 
         if conf.FILESTORE:
             if conf.FILE_STORAGE_TYPE == 'JSON':
@@ -33,23 +32,67 @@ class ChatroomStore:
         :param filename: filename of the JSON dump
         :return: None
         """
-        #TODO add some cache capacity constraints
         f = open(filename, 'r')
         jsondict = jsonpickle.decode(f.read())
         for key in jsondict:
-        if type(jsondict[key]) is dict:
-            self.chatrooms[key]=Chatroom.fromDict(jsondict[key])
-            self.chatrooms[key].concept = Concept.fromDict(self.chatrooms[key].concept)
-            self.concepts[key] = self.chatrooms[key].concept
-        else:
-          chatroomList[key]=jsondict[key]
+            if type(jsondict[key]) is dict:
+                temp_chatroom = Chatroom.fromDict(jsondict[key])
+                self.add_chatroom(temp_chatroom)
+            else:
+                self.add_chatroom(jsondict[key])
         f.close()
 
-        def add_chatroom(chatroom, uid=None):
-            """
-            Adds a new chatroom or overrides an old one.
-            :param chatroom: a chatroom object.
-            :param key: unique identifier used to associate with the object.
-                If equal to none then new non-overriding key will be generated.
-            :return: None
-            """
+    def save_chatrooms_to_JSON(self, filename, chatroomList):
+        #TODO check if I even work
+        f = open(filename, 'w')
+        f.write(jsonpickle.encode(chatroomList))
+        f.close()
+
+
+    def add_chatroom(self, chatroom, key=None):
+        """
+        Adds a new chatroom or overrides an old one.
+        :param chatroom: a chatroom object.
+        :param key: unique identifier used to associate with the object.
+            If equal to none then new non-overriding key will be generated.
+        :return: uid of the new chatroom
+        """
+        # generate a random key
+        if key is not None:
+            uid = key
+        else:
+            uid = ''.join(random.choice(string.digits + string.letters) for _ in 6)
+            while uid in self.concepts.keys:
+                uid = ''.join(random.choice(string.digits + string.letters) for _ in 6)
+        # adding the chatroom
+        self.chatrooms[uid] = chatroom
+        conf.v_print("chatroom added successfully!")
+        return uid
+
+    def update_users(self):
+        """
+        updates the current amount of users of the chatroom (checking if users dropped off etc.)
+        """
+        new_user_count = 0
+        for chatroom in self.chatrooms:
+            chatroom.update_users
+            new_user_count += chatroom.get_total_users()
+        self.total_users = new_user_count
+
+
+    def add_user(self, uid, user_ip, user_name):
+        if self.chatrooms[uid].add_user(user_name, user_ip):
+            self.total_users += 1
+            conf.v_print("user " + user_name + " added successfully")
+        else:
+            conf.v_print("adding of user " + user_name + "unsuccessful...")
+
+
+    def get_text(self, uid):
+        if uid in self.chatrooms:
+            return self.chatrooms[uid].getText()
+        else:
+            raise AssertionError("Chatroom does not exist!")
+
+    def add_text(self, uid, user_ip, text):
+        #TODO finish me!!!!!
