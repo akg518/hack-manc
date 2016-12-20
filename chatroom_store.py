@@ -18,13 +18,12 @@ class ChatroomStore:
     def __init__(self):
         conf.v_print("setting up chatrooms...")
         self.lastUpdateTime = datetime.now()
-        self.chatrooms = {}  # maps uid to chatroom object
+        self.chatrooms = {}  # type: dict[string, Chatroom]
         self.total_users = 0  # total users across all chatrooms
 
         if conf.FILESTORE:
             if conf.FILE_STORAGE_TYPE == 'JSON':
                 pass
-
 
     def load_chatrooms_from_JSON(self, filename):
         """
@@ -42,10 +41,10 @@ class ChatroomStore:
                 self.add_chatroom(jsondict[key])
         f.close()
 
-    def save_chatrooms_to_JSON(self, filename, chatroomList):
+    def save_chatrooms_to_JSON(self, filename):
         #TODO check if I even work
         f = open(filename, 'w')
-        f.write(jsonpickle.encode(chatroomList))
+        f.write(jsonpickle.encode(self.chatrooms))
         f.close()
 
 
@@ -59,15 +58,21 @@ class ChatroomStore:
         """
         # generate a random key
         if key is not None:
-            uid = key
+            uid = str(key)
         else:
-            uid = ''.join(random.choice(string.digits + string.letters) for _ in 6)
-            while uid in self.concepts.keys:
-                uid = ''.join(random.choice(string.digits + string.letters) for _ in 6)
+            uid = ''.join(random.choice(string.digits + string.letters) for _ in xrange(6))
+            while uid in self.chatrooms.keys():
+                uid = ''.join(random.choice(string.digits + string.letters) for _ in xrange(6))
         # adding the chatroom
         self.chatrooms[uid] = chatroom
         conf.v_print("chatroom added successfully!")
         return uid
+
+    def get_chatroom_keys(self):
+        """
+        gets a list of all chatroom unique identifiers
+        """
+        return self.chatrooms.keys()
 
     def update_users(self):
         """
@@ -75,10 +80,9 @@ class ChatroomStore:
         """
         new_user_count = 0
         for chatroom in self.chatrooms:
-            chatroom.update_users
+            chatroom.update_users()
             new_user_count += chatroom.get_total_users()
         self.total_users = new_user_count
-
 
     def add_user(self, uid, user_ip, user_name):
         if self.chatrooms[uid].add_user(user_name, user_ip):
@@ -87,12 +91,26 @@ class ChatroomStore:
         else:
             conf.v_print("adding of user " + user_name + "unsuccessful...")
 
-
     def get_text(self, uid):
+        """
+        get text for the chatroom, return text if complete false otherwise
+        :param uid: unique identifier string of the chatroom
+        :return: string block to be printed
+        """
         if uid in self.chatrooms:
             return self.chatrooms[uid].getText()
         else:
             raise AssertionError("Chatroom does not exist!")
 
     def add_text(self, uid, user_ip, text):
-        #TODO finish me!!!!!
+        """
+        add text to the chatroom. Raise upon error.
+        :param uid: unique identifier string of the chatroom
+        :param user_ip: user ip
+        :param text: text to be inserted
+        """
+        if uid in self.chatrooms:
+            username = self.chatrooms[uid].get_user(user_ip)
+            self.chatrooms[uid].add_entry(username, text)
+        else:
+            raise AssertionError("Chatroom does not exist!")

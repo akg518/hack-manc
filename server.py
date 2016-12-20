@@ -18,7 +18,7 @@ import conf
 
 app = Flask(__name__)
 
-CHATROOMS = ChatroomStore
+CHATROOMS = ChatroomStore()
 
 def init_server():
     """
@@ -68,7 +68,7 @@ def get_suggestions():
         return ""
     input_concept = Concept()
     input_concept.importFromText(input_text)
-    suggestion_list = input_concept.top5chatrooms(ChatroomStore.chatrooms)
+    suggestion_list = input_concept.top5chatrooms(CHATROOMS.chatrooms)
     tempResult = [(CHATROOMS.chatrooms[entry[0]].getTopWords(), entry[1], entry[0]) for entry in suggestion_list]
     if conf.VERBOSE:
         print "top results:"
@@ -113,6 +113,7 @@ def add_user_to_chatroom():
     username = request.args.get('username', '', type=str)
     user_ip = request.args.get('user_ip', '', type=str)
     CHATROOMS.add_user(uid, user_ip, username)
+    conf.v_print("im still here")
     return redirect(url_for('chatroom', uid=uid))
 
 
@@ -126,10 +127,7 @@ def add_text_to_chatroom():
     uid = request.args.get('uid', '', type=str) # chatroom id
     user_ip = request.args.get('user_ip', '', type=str) # user ip
     entry = request.args.get('entry', '', type=str) # text to enter
-    if user_ip not in SERVER_CHATROOMS[uid].users:
-        SERVER_CHATROOMS[uid].add_user("anonymous", "user_ip")
-    username = SERVER_CHATROOMS[uid].get_user(user_ip)
-    SERVER_CHATROOMS[uid].add_entry(username, entry)
+    CHATROOMS.add_text(uid, user_ip, entry)
     return jsonify(result="success!")
 
 
@@ -148,7 +146,7 @@ def chatroom(uid):
     :param uid: unique identifier of the chatroom
     """
     title = request.args.get('title', '', type=str)
-    return render_template('chatroom.html', uid=uid, title=title, chatroom_ids = SERVER_CHATROOMS.keys())
+    return render_template('chatroom.html', uid=uid, title=title, chatroom_ids=CHATROOMS.get_chatroom_keys())
 
 if __name__ == "__main__":
     init_server()

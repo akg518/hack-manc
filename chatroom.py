@@ -2,28 +2,6 @@ import random
 import jsonpickle
 from concept import Concept
 
-TEST_CHATROOMS = {}
-CHATROOM_DATA = ["it is pretty rainy today, I don't want to go outside",
-                 "I wander what to eat for lunch - maybe some stir fry?",
-                 "I want new cook up some new recipes.",
-                 "it's a really nice weather today - I should go outside and play in the park!",
-                 "camembert cheese is the best cheese",
-                 "I'm tired, I need to get some fresh air",
-                 "It's really cold outside, I should buy a new jacket",
-                 "what is the best type of coffee?",
-                 "that chocolate from coop is really good!",
-                 "which country has the best weather?",
-                 "I need more caffeine - I'm so tired!",
-                 "Today's tuna sandwitches were really nice!",
-                 "Does anyone know where I can get fresh cucamber",
-                 "I hate when my jeans are too tight",
-                 "I have found a fantastic pizza place in my neighbourhood",
-                 "It's important to wear matching pairs of clothing",
-                 "How can people add pickles to salads?!",
-                 "I'm trying to save up for the new pair of shoes",
-                 "do you think it always rains in scotland?",
-                 "I'm looking for a substitue for bread, I really need to go on diet"]
-CHATROOM_DATA_UPDATE = False
 
 class Chatroom(object):
     def __init__(self, concept):
@@ -84,22 +62,6 @@ class Chatroom(object):
       return result
       
 
-
-  
-
-  
-if __name__=="__main__":
-    # if CHATROOM_DATA_UPDATE:
-    #   createTempChatrooms(CHATROOM_DATA, TEST_CHATROOMS)
-    #   saveCurrentChatrooms("dumps.json", TEST_CHATROOMS)
-    # loadChatrooms("dumps.json", TEST_CHATROOMS)
-    # print TEST_CHATROOMS['991'].getTopWords()
-    #   compare_concept=Concept()
-    #   compare_concept.importFromText("this weather sucks - it is far too rainy! I would far prefer if it was sunny.")
-    #   #compare_concept.top5chatrooms(TEST_CHATROOMS)
-    #   uid = createNewChatroom(compare_concept, TEST_CHATROOMS)
-    #   TEST_CHATROOMS[uid].getTopWords()
-    pass
   
   
   

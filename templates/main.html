@@ -69,7 +69,7 @@
    	var prettyStr = "";
    	if (listLength>0){
    		for (var i = 0; i<listLength; i++){
-   	 		prettyStr += "<span onclick=\"getToChatroom("+list[i][2]+",\'"+list[i][0]+"\');\"> ";
+   	 		prettyStr += "<span onclick=\"getToChatroom('"+list[i][2]+"',\'"+list[i][0]+"\');\"> ";
    			prettyStr += list[i][0];
    			prettyStr += " - ";
    			prettyStr += parseFloat(list[i][1]).toFixed(2);
@@ -82,22 +82,16 @@
 
    function getToChatroom(uid,title)
    {
-   	$(function()
-   	 {
-   	 	$.getJSON($SCRIPT_ROOT + '/_add_user_to_chatroom', 
-   	 	{
-         username: document.getElementById("nameuser").value,
-         uid: uid,
-         user_ip: myip
-       	},
-       	function(data) {window.location = 
-       		"/chatroom/"+uid+"?title="+title;
-       	});
-       	return false;
-   	 });
-   
-
-   };
+   	 	$.getJSON(
+   	 		$SCRIPT_ROOT + '/_add_user_to_chatroom',
+			{
+			 username: document.getElementById("nameuser").value,
+			 uid: uid,
+			 user_ip: myip
+			},
+			function(data){window.location.href = data.result;}
+     	);
+  };
   </script>
 
 

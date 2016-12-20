@@ -1,5 +1,3 @@
-import json
-
 from NLP import getTaxonomy, getKeywords
 from conf import v_print
 
