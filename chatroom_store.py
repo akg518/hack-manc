@@ -91,16 +91,18 @@ class ChatroomStore:
         else:
             conf.v_print("adding of user " + user_name + "unsuccessful...")
 
+    def validate_uid(self, uid):
+        if uid not in self.chatrooms():
+            raise AssertionError("Chatroom does not exist!")
+
     def get_text(self, uid):
         """
-        get text for the chatroom, return text if complete false otherwise
+        get text for the chatroom
         :param uid: unique identifier string of the chatroom
         :return: string block to be printed
         """
-        if uid in self.chatrooms:
-            return self.chatrooms[uid].getText()
-        else:
-            raise AssertionError("Chatroom does not exist!")
+        self.validate_uid(uid)
+        return self.chatrroms[uid].get_text()
 
     def add_text(self, uid, user_ip, text):
         """
@@ -109,15 +111,13 @@ class ChatroomStore:
         :param user_ip: user ip
         :param text: text to be inserted
         """
-        if uid in self.chatrooms:
-            username = self.chatrooms[uid].get_user(user_ip)
-            self.chatrooms[uid].add_entry(username, text)
-        else:
-            raise AssertionError("Chatroom does not exist!")
+        self.validate_uid(uid)
+        username = self.chatrooms[uid].get_user(user_ip)
+        self.chatrooms[uid].add_entry(username, text)
 
     def get_title(self, uid):
         """
-
-        :param uid:
-        :return:
+        gets title of the chatroom. Raise upon Error
         """
+        self.validate_uid(uid)
+        return self.chatrooms[uid].get_title()

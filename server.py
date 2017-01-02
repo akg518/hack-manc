@@ -8,7 +8,7 @@ currently it is storing all the chatrooms in memory
 # TODO create a proper chatroom management structure - use buffer and garbage collect unused chatrooms
 # TODO fix the chatroom implementation - USE callback funcitons rather than probing!
 
-from flask import Flask, jsonify, render_template, request, redirect, url_for
+from flask import Flask, jsonify, render_template, request, redirect, url_for, send_from_directory
 from chatroom_store import ChatroomStore
 from concept import Concept
 from optparse import OptionParser
@@ -131,6 +131,21 @@ def add_text_to_chatroom():
 
     CHATROOMS.add_text(uid, user_ip, entry)
     return jsonify(result="success!")
+
+
+@app.route('/js/<path:filename>')
+def send_js(filename):
+    return send_from_directory('js', filename)
+
+
+@app.route('/css/<path:filename>')
+def send_css(filename):
+    return send_from_directory('css', filename)
+
+
+@app.route('/images/<path:filename>')
+def send_image(filename):
+    return send_from_directory('images', filename)
 
 
 @app.route('/')

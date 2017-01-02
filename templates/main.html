@@ -1,35 +1,36 @@
-f<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
-
-
 <head>
-  <link rel="stylesheet" type="text/css" href="chat.css">
-  <title>Connect.me</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="css/chat.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="js/main.js">$SCRIPT_ROOT={{ request.script_root|tojson|safe }}</script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+  
+  <title>Connect.me</title>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">  
 </head>
-<body background="http://s18.postimg.org/aiyu7cffr/Connect_Me_BG2.jpg" style= "background-size: cover">
+
+<body background="images/ConnectMeBG.jpg" style= "background-size: cover">
+	
 	<div class="container text-center">
-		<h1><img src="https://s16.postimg.org/vcar7srud/Connect_Me_Logo.png" style="width:600px;height:200px;"></h1>
+		<h1><img src="images/ConnectMeLogo.png" style="width:600px;height:200px;"></h1>
 	</div>
 	<div class="container"style="width:80%">
 	<div class="panel panel-default"style="background-color: rgba(245, 245, 245, 0.5);">
 		<div class="panel-heading">Express yourself<span id="username" ></span></div>
 		<div class="panel-footer"style="background-color: rgba(245, 245, 245, 0.5);">
 			<div class="row">
-				<span id="USTAW">
 					<div class="col-md-4"><input type="text" class="form-control" id="nameuser" placeholder="Username"></div>
-				</span>
 			</div>
 			<div class="row">
-				<span id="USTAW">
-					<div class="col-md-8"><input type="text" class="form-control" name="sentenceInput" id="messageInput" placeholder="Try: 'My work is depressing'"></div>
-					<div class="col-md-2"><button class="btn btn-success" type="button" id="submit"> Submit </button></div>
-				</span>
+					<div class="col-md-8"><input type="text" class="form-control" id="concept_text" placeholder="Try: 'My work is depressing'"></div>
+					<div class="col-md-2"><button class="btn btn-success" type="button" id="submit" onclick=("test()")> Submit </button></div>
 			</div>
 			<div id="footer" style = "visibility: visible;" class="panel-footer">
 			<div class="row">
@@ -40,58 +41,8 @@ f<!DOCTYPE html>
 			</div>
 		</div>
 	</div>
-</div>
+	</div>
 </body>
 </html>
-  <script type="application/javascript" src="http://l2.io/ip.js?var=myip"></script>
-
-<script type=text/javascript>
-    $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
- </script>
-
-<script type=text/javascript>
-  var uid = {{uid}}
-    
-  $(function() {
-    $('button#submit').bind('click', function() {
-      $.getJSON($SCRIPT_ROOT + '/_get_suggestions_', {
-        input_text: $('input[name="sentenceInput"]').val()
-      }, function(data) {
-
-      document.getElementById("topicList").innerHTML = interpretSuggestionList(data.result);
-      });
-      return false;
-    });
-  });
-
-   interpretSuggestionList = function(list){
-   	var listLength = list.length;
-   	var prettyStr = "";
-   	if (listLength>0){
-   		for (var i = 0; i<listLength; i++){
-   	 		prettyStr += "<span onclick=\"getToChatroom('"+list[i][2]+"',\'"+list[i][0]+"\');\"> ";
-   			prettyStr += list[i][0];
-   			prettyStr += " - ";
-   			prettyStr += parseFloat(list[i][1]).toFixed(2);
-   			prettyStr += "</span>";
-   			prettyStr += "\n";
-   	}
-   	}
-   	return prettyStr;
-   };
-
-   function getToChatroom(uid,title)
-   {
-   	 	$.getJSON(
-   	 		$SCRIPT_ROOT + '/_add_user_to_chatroom',
-			{
-			 username: document.getElementById("nameuser").value,
-			 uid: uid,
-			 user_ip: myip
-			},
-			function(data){window.location.href = data.result;}
-     	);
-  };
-  </script>
 
 

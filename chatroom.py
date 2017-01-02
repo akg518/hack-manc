@@ -5,9 +5,10 @@ from concept import Concept
 
 class Chatroom(object):
     def __init__(self, concept):
-      self.concept = concept
-      self.users = {}  # written as ip:username (for now)
-      self.entries = []  # written as [(user, text)]
+        self.concept = concept
+        self.users = {}  # written as ip:username (for now)
+        self.entries = []  # written as [(user, text)]
+        self.title = self.generateTitle()
 
     def getText(self):
         #TODO fix this, html tags should not exist in a concept entity but in an html rendering entity
@@ -52,6 +53,9 @@ class Chatroom(object):
         top3 = [entry[0] for entry in top3]
         result = "Let us chat about " + ', '.join(top3[:-1]) + " and " + top3[-1]
         return result
+
+    def get_title(self):
+        return self.title
 
     @staticmethod
     def fromDict(dicitonary):
