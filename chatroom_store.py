@@ -114,3 +114,10 @@ class ChatroomStore:
             self.chatrooms[uid].add_entry(username, text)
         else:
             raise AssertionError("Chatroom does not exist!")
+
+    def get_title(self, uid):
+        """
+
+        :param uid:
+        :return:
+        """

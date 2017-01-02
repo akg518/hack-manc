@@ -69,7 +69,7 @@ def get_suggestions():
     input_concept = Concept()
     input_concept.importFromText(input_text)
     suggestion_list = input_concept.top5chatrooms(CHATROOMS.chatrooms)
-    tempResult = [(CHATROOMS.chatrooms[entry[0]].getTopWords(), entry[1], entry[0]) for entry in suggestion_list]
+    tempResult = [(CHATROOMS.chatrooms[entry[0]].generateTitle(), entry[1], entry[0]) for entry in suggestion_list]
     if conf.VERBOSE:
         print "top results:"
         for i, item in enumerate(tempResult):
@@ -114,7 +114,8 @@ def add_user_to_chatroom():
     user_ip = request.args.get('user_ip', '', type=str)
     CHATROOMS.add_user(uid, user_ip, username)
     conf.v_print("im still here")
-    return redirect(url_for('chatroom', uid=uid))
+    conf.v_print("redirecting to chatroom, link: " + url_for('chatroom', uid=uid))
+    return jsonify(result=url_for('chatroom', uid=uid))
 
 
 @app.route('/_add_text_to_chatroom_')
@@ -127,6 +128,7 @@ def add_text_to_chatroom():
     uid = request.args.get('uid', '', type=str) # chatroom id
     user_ip = request.args.get('user_ip', '', type=str) # user ip
     entry = request.args.get('entry', '', type=str) # text to enter
+
     CHATROOMS.add_text(uid, user_ip, entry)
     return jsonify(result="success!")
 
@@ -146,6 +148,7 @@ def chatroom(uid):
     :param uid: unique identifier of the chatroom
     """
     title = request.args.get('title', '', type=str)
+    print("uid: " + uid)
     return render_template('chatroom.html', uid=uid, title=title, chatroom_ids=CHATROOMS.get_chatroom_keys())
 
 if __name__ == "__main__":

@@ -29,7 +29,7 @@ class Chatroom(object):
 
     def update_users(self):
         """
-        checks the staus of each user connection, drops out people no longer found
+        checks the status of each user connection, drops out people no longer found
         """
         pass
 
@@ -44,7 +44,7 @@ class Chatroom(object):
         if len(self.entries) > 20:
             self.entries = self.entries[-20:]
 
-    def getTopWords(self):
+    def generateTitle(self):
         chat_markers = self.concept.keywords.items()
         chat_markers.extend([(topic[0][topic[0].rfind('/')+1:], topic[1]) for topic in self.concept.topics.items()]) # create markers with the most important categories and score
         top3 = sorted(chat_markers, key = lambda x: x[1], reverse=True)
