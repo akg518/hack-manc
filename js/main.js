@@ -30,9 +30,10 @@ function render_list(list)
 function getToChatroom(uid,title)
 {
 	$.getJSON(
-		$SCRIPT_ROOT + '/_add_user_to_chatroom',
+		//window.script_root + 
+		'/_add_user_to_chatroom',
 		{
-		 username: document.getElementById('nameuser').value,
+		 username: $('#username').val(),
 		 uid: uid,
 		 user_ip: myip
 		},
@@ -42,9 +43,9 @@ function getToChatroom(uid,title)
   
 function getSuggestions() 
 {
-  $.getJSON($SCRIPT_ROOT + '/_get_suggestions_',
+  $.getJSON( '/_get_suggestions_',  //window.script_root +
   {
-	input_text: $('#concept_text').val
+	input_text: $('#concept_text').val()
   }, 
   function(data) 
   {
