@@ -13,3 +13,7 @@ aa2hh
 daniel to wieksza pipa
 
 bartek b to najwieksza pipa
+
+pizza pizza macaroni
+
+pipa * 5

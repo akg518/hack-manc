@@ -6,7 +6,9 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script src="js/main.js">$SCRIPT_ROOT={{ request.script_root|tojson|safe }}</script>
+  <script src="js/main.js">window.script_root={{ request.script_root|tojson|safe }};
+  window.alert(window.script_root);
+  </script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   
   
@@ -26,7 +28,7 @@
 		<div class="panel-heading">Express yourself<span id="username" ></span></div>
 		<div class="panel-footer"style="background-color: rgba(245, 245, 245, 0.5);">
 			<div class="row">
-					<div class="col-md-4"><input type="text" class="form-control" id="nameuser" placeholder="Username"></div>
+					<div class="col-md-4"><input type="text" class="form-control" id="username" placeholder="Username"></div>
 			</div>
 			<div class="row">
 					<div class="col-md-8"><input type="text" class="form-control" id="concept_text" placeholder="Try: 'My work is depressing'"></div>
