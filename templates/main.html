@@ -2,16 +2,20 @@
 <html lang="en">
 
 <head>
-  <link rel="stylesheet" type="text/css" href="css/chat.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script src="js/main.js">window.script_root={{ request.script_root|tojson|safe }};
-  window.alert(window.script_root);
-  </script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  
-  
+    <link rel="stylesheet" type="text/css" href="css/chat.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        function init_site()
+        {
+            window.script_root={{ request.script_root|tojson|safe }};
+        }
+        window.onload = init_site();
+    </script>
+
   <title>Connect.me</title>
   
   <meta charset="utf-8">
@@ -19,13 +23,12 @@
 </head>
 
 <body background="images/ConnectMeBG.jpg" style= "background-size: cover">
-	
 	<div class="container text-center">
 		<h1><img src="images/ConnectMeLogo.png" style="width:600px;height:200px;"></h1>
 	</div>
 	<div class="container"style="width:80%">
 	<div class="panel panel-default"style="background-color: rgba(245, 245, 245, 0.5);">
-		<div class="panel-heading">Express yourself<span id="username" ></span></div>
+		<div class="panel-heading">Express yourself</div>
 		<div class="panel-footer"style="background-color: rgba(245, 245, 245, 0.5);">
 			<div class="row">
 					<div class="col-md-4"><input type="text" class="form-control" id="username" placeholder="Username"></div>
@@ -36,9 +39,7 @@
 			</div>
 			<div id="footer" style = "visibility: visible;" class="panel-footer">
 			<div class="row">
-				<span id="topicListPlaceholder">
 					<div style="font: arial; font-size: 14pt; font-color: blue; cursor:pointer; white-space: pre;" class="col-md-12"><span id="topicList"></span></div>
-				</span>
 			</div>
 			</div>
 		</div>
